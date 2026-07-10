@@ -1,0 +1,88 @@
+@model IEnumerable<KerashineERP.Models.Inventory.INV_Item>
+@{
+    ViewData["Title"] = "Item Master";
+    string currentType = ViewBag.ItemType ?? "ALL";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Item Master</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary">
+            <i class="fa fa-plus"></i> Add New Item
+        </a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <div class="ks-filter-tabs mb-3">
+            <a asp-action="Index" asp-route-type="ALL" class="ks-filter-tab @(currentType == "ALL" ? "active" : "")">All</a>
+            <a asp-action="Index" asp-route-type="RM" class="ks-filter-tab info @(currentType == "RM" ? "active" : "")">Raw Material</a>
+            <a asp-action="Index" asp-route-type="PM" class="ks-filter-tab warning @(currentType == "PM" ? "active" : "")">Packaging</a>
+            <a asp-action="Index" asp-route-type="FG" class="ks-filter-tab success @(currentType == "FG" ? "active" : "")">Finished Good</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="itemTable">
+                <thead>
+                    <tr>
+                        <th style="width:80px">Code</th>
+                        <th>Item Name</th>
+                        <th style="width:120px">Type</th>
+                        <th style="width:80px">Size</th>
+                        <th>Category</th>
+                        <th style="width:80px">UOM</th>
+                        <th style="width:80px">Status</th>
+                        <th style="width:90px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.ItemCode</strong></td>
+                            <td>@item.ItemName</td>
+                            <td>
+                                @if (item.ItemType == "RM") { <span class="ks-badge ks-badge-info">Raw Material</span> }
+                                else if (item.ItemType == "PM") { <span class="ks-badge ks-badge-warning">Packaging</span> }
+                                else { <span class="ks-badge ks-badge-success">Finished Good</span> }
+                            </td>
+                            <td>@item.ItemSize @item.SizeUOM</td>
+                            <td>@item.Category?.CategoryName</td>
+                            <td>@item.UOM?.UOMName</td>
+                            <td>
+                                @if (item.IsActive)
+                                { <span class="ks-badge ks-badge-success">Active</span> }
+                                else
+                                { <span class="ks-badge ks-badge-danger">Inactive</span> }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ItemId" class="ks-action-btn edit" title="Edit">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ItemId" class="ks-action-btn delete" title="Delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#itemTable').DataTable({
+                "order": [[0, "desc"]],
+                "pageLength": 25
+            });
+        });
+    </script>
+}

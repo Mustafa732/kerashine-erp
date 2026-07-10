@@ -1,0 +1,47 @@
+@model KerashineERP.Models.Inventory.INV_SET_UOM
+@{
+    ViewData["Title"] = "Delete UOM";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header" style="background:#fee2e2; border-color:#fecaca;">
+        <h4 style="color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i> Delete Unit of Measure</h4>
+    </div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2; border:1px solid #fecaca; color:#991b1b; border-radius:6px; padding:1rem; margin-bottom:1.5rem;">
+            <strong>Warning:</strong> Are you sure you want to deactivate this UOM? 
+            <br>Items using this UOM may be affected.
+        </div>
+        
+        <dl class="row" style="background:#f8fafc; padding:1.25rem; border-radius:6px; border:1px solid var(--ks-border);">
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">UOM Code</dt>
+            <dd class="col-sm-9"><code style="background:#e2e8f0; padding:0.25rem 0.5rem; border-radius:4px;">@Model.UOMCode</code></dd>
+            
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">UOM Name</dt>
+            <dd class="col-sm-9"><strong>@Model.UOMName</strong></dd>
+            
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Description</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Status</dt>
+            <dd class="col-sm-9">
+                @if (Model.IsActive)
+                { <span class="ks-badge ks-badge-success">Active</span> }
+                else
+                { <span class="ks-badge ks-badge-danger">Inactive</span> }
+            </dd>
+        </dl>
+        
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="UOMId" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="ks-btn" style="background:#dc2626; color:#fff;">
+                    <i class="fa-solid fa-ban"></i> Yes, Deactivate
+                </button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">
+                    <i class="fa-solid fa-arrow-left"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+@using KerashineERP.Models.ViewModels
+@model Welcome
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Select Company & Fiscal Year</div>
+            <div class="card-body">
+                <form asp-action="Welcome" method="post">
+                    <div class="mb-3">
+                        <label>Business</label>
+                        <select asp-for="BusinessID" class="form-control" id="BusinessID">
+                            <option value="">-- Select Business --</option>
+                            @foreach(var b in Model.Businesses)
+                            {
+                                <option value="@b.BusinessID">@b.BusinessName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Company</label>
+                        <select asp-for="CompanyID" class="form-control" id="CompanyID">
+                            <option value="">-- Select Company --</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label>Fiscal Year</label>
+                        <select asp-for="FiscalID" class="form-control" id="FiscalID">
+                            <option value="">-- Select Fiscal Year --</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $('#BusinessID').change(function() {
+        var businessId = $(this).val();
+        $('#CompanyID').empty().append('<option value="">-- Select Company --</option>');
+        $('#FiscalID').empty().append('<option value="">-- Select Fiscal Year --</option>');
+        if(businessId) {
+            $.get('/Home/GetCompaniesByBusiness', { businessId: businessId }, function(data) {
+                $.each(data, function(i, item) {
+                    $('#CompanyID').append($('<option>', { value: item.companyID, text: item.companyName }));
+                });
+            });
+        }
+    });
+
+    $('#CompanyID').change(function() {
+        var companyId = $(this).val();
+        $('#FiscalID').empty().append('<option value="">-- Select Fiscal Year --</option>');
+        if(companyId) {
+            $.get('/Home/GetFiscalsByCompany', { companyId: companyId }, function(data) {
+                $.each(data, function(i, item) {
+                    $('#FiscalID').append($('<option>', { value: item.fiscalID, text: item.fiscalYear }));
+                });
+            });
+        }
+    });
+</script>
+}

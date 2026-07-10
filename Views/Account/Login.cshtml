@@ -1,0 +1,79 @@
+@model KerashineERP.Models.ViewModels.LoginViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "Log in - KerashineERP";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <div class="card auth-card">
+                        <div class="row g-0">
+                            <!-- Left Side - Branding -->
+                            <div class="col-md-6 auth-brand-side">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="mb-3" viewBox="0 0 16 16">
+                                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+                                </svg>
+                                <h1>KerashineERP</h1>
+                                <p>Modern Enterprise Resource Planning<br />Manage your business with ease</p>
+                            </div>
+
+                            <!-- Right Side - Login Form -->
+                            <div class="col-md-6 auth-form-side">
+                                <h3 class="mb-1 fw-bold">Welcome back</h3>
+                                <p class="text-muted mb-4">Please sign in to your account</p>
+
+                                <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                                    <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2" role="alert"></div>
+
+                                    <div class="mb-3">
+                                        <label asp-for="Email" class="form-label">Email address</label>
+                                        <input asp-for="Email" class="form-control" placeholder="name@company.com" autocomplete="username" />
+                                        <span asp-validation-for="Email" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label asp-for="Password" class="form-label">Password</label>
+                                        <input asp-for="Password" class="form-control" placeholder="Enter your password" autocomplete="current-password" />
+                                        <span asp-validation-for="Password" class="text-danger small"></span>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" asp-for="RememberMe" />
+                                            <label class="form-check-label" asp-for="RememberMe">
+                                                @Html.DisplayNameFor(m => m.RememberMe)
+                                            </label>
+                                        </div>
+                                        <a href="#" class="small text-decoration-none">Forgot password?</a>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100 btn-auth">Sign In</button>
+                                </form>
+
+                                <p class="text-center text-muted mt-4 mb-0 small">
+                                    © 2026 KerashineERP. All rights reserved.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

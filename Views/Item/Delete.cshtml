@@ -1,0 +1,60 @@
+@model KerashineERP.Models.Inventory.INV_Item
+@{
+    ViewData["Title"] = "Delete Item";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header" style="background:#fee2e2; border-color:#fecaca;">
+        <h4 style="color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i> Deactivate Item</h4>
+    </div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2; border:1px solid #fecaca; color:#991b1b; border-radius:6px; padding:1rem; margin-bottom:1.5rem;">
+            <strong>Warning:</strong> Are you sure you want to deactivate this item? 
+            <br>It will be hidden from all transactions but data will not be deleted permanently.
+        </div>
+
+        <dl class="row" style="background:#f8fafc; padding:1.25rem; border-radius:6px; border:1px solid var(--ks-border);">
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Item Code</dt>
+            <dd class="col-sm-9"><strong>@Model.ItemCode</strong></dd>
+            
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Item Name</dt>
+            <dd class="col-sm-9">@Model.ItemName</dd>
+            
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Type</dt>
+            <dd class="col-sm-9">
+                @if (Model.ItemType == "RM") { <span class="ks-badge ks-badge-info">Raw Material</span> }
+                else if (Model.ItemType == "PM") { <span class="ks-badge ks-badge-warning">Packaging</span> }
+                else { <span class="ks-badge ks-badge-success">Finished Good</span> }
+            </dd>
+
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Size</dt>
+            <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.ItemSize)? "-" : $"{Model.ItemSize} {Model.SizeUOM}")</dd>
+
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Category</dt>
+            <dd class="col-sm-9">@Model.Category?.CategoryName</dd>
+
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">UOM</dt>
+            <dd class="col-sm-9">@Model.UOM?.UOMName</dd>
+
+            <dt class="col-sm-3" style="font-weight:600; color:#64748b;">Current Status</dt>
+            <dd class="col-sm-9">
+                @if (Model.IsActive)
+                { <span class="ks-badge ks-badge-success">Active</span> }
+                else
+                { <span class="ks-badge ks-badge-danger">Inactive</span> }
+            </dd>
+        </dl>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="ItemId" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="ks-btn" style="background:#dc2626; color:#fff;">
+                    <i class="fa-solid fa-ban"></i> Delete
+                </button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">
+                    <i class="fa-solid fa-arrow-left"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

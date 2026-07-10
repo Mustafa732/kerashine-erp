@@ -1,0 +1,276 @@
+/* KerashineERP Master UI - Sab forms ke liye same */
+:root {
+    --ks-primary: #2563eb;
+    --ks-primary-hover: #1d4ed8;
+    --ks-success: #16a34a;
+    --ks-danger: #dc2626;
+    --ks-warning: #f59e0b;
+    --ks-info: #0891b2;
+    --ks-dark: #1e293b;
+    --ks-border: #e2e8f0;
+    --ks-bg-light: #f8fafc;
+    --ks-radius: 8px;
+    --ks-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+}
+
+/* Card - Sab forms ka main container */
+.ks-card {
+    background: #fff;
+    border: 1px solid var(--ks-border);
+    border-radius: var(--ks-radius);
+    box-shadow: var(--ks-shadow);
+    margin-bottom: 1.5rem;
+}
+
+.ks-card-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--ks-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.ks-card-header h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--ks-dark);
+}
+
+.ks-card-body {
+    padding: 1.5rem;
+}
+
+/* Buttons */
+.ks-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.ks-btn-primary {
+    background: var(--ks-primary);
+    color: #fff;
+}
+
+.ks-btn-primary:hover {
+    background: var(--ks-primary-hover);
+}
+
+/* Filter Tabs - Item Master wala style */
+.ks-filter-tabs {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--ks-border);
+    border-radius: 6px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.ks-filter-tab {
+    padding: 0.5rem 1.25rem;
+    background: #fff;
+    border: none;
+    border-right: 1px solid var(--ks-border);
+    color: #64748b;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.ks-filter-tab:last-child {
+    border-right: none;
+}
+
+.ks-filter-tab:hover {
+    background: var(--ks-bg-light);
+}
+
+.ks-filter-tab.active {
+    background: var(--ks-dark);
+    color: #fff;
+}
+
+.ks-filter-tab.info.active { background: var(--ks-info); }
+.ks-filter-tab.warning.active { background: var(--ks-warning); }
+.ks-filter-tab.success.active { background: var(--ks-success); }
+
+/* Table */
+.ks-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.ks-table thead th {
+    background: var(--ks-bg-light);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #475569;
+    border-bottom: 1px solid var(--ks-border);
+    text-align: left;
+}
+
+.ks-table tbody td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--ks-border);
+    vertical-align: middle;
+}
+
+.ks-table tbody tr:hover {
+    background: var(--ks-bg-light);
+}
+
+/* Badges */
+.ks-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.ks-badge-info { background: #cffafe; color: #0e7490; }
+.ks-badge-warning { background: #fef3c7; color: #92400e; }
+.ks-badge-success { background: #d1fae5; color: #065f46; }
+.ks-badge-danger { background: #fee2e2; color: #991b1b; }
+
+/* Action Buttons */
+.ks-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2px;
+}
+
+.ks-action-btn.edit { background: var(--ks-primary); color: #fff; }
+.ks-action-btn.delete { background: var(--ks-danger); color: #fff; }
+
+/* Form Elements */
+.ks-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.ks-form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--ks-dark);
+    font-size: 0.875rem;
+}
+
+.ks-form-control {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--ks-border);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.ks-form-control:focus {
+    outline: none;
+    border-color: var(--ks-primary);
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ks-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .ks-filter-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+/* Compact Table - Item Master ke liye */
+.ks-table.ks-table-sm thead th {
+    padding: 0.625rem 0.875rem;
+    font-size: 0.8125rem;
+}
+
+.ks-table.ks-table-sm tbody td {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+}
+
+.ks-table.ks-table-sm tbody tr {
+    height: 48px;
+}
+
+/* Action Buttons with Icons */
+.ks-action-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2px;
+    transition: all 0.15s;
+    font-size: 0.875rem;
+}
+
+.ks-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 0.15);
+}
+
+.ks-action-btn.edit { 
+    background: #3b82f6; 
+    color: #fff; 
+}
+.ks-action-btn.edit:hover { 
+    background: #2563eb; 
+}
+
+.ks-action-btn.delete { 
+    background: #ef4444; 
+    color: #fff; 
+}
+.ks-action-btn.delete:hover { 
+    background: #dc2626; 
+}
+
+.ks-action-btn.success { 
+    background: #22c55e; 
+    color: #fff; 
+}
+.ks-action-btn.success:hover { 
+    background: #16a34a; 
+}
+
+/* Badge compact */
+.ks-badge {
+    padding: 0.2rem 0.625rem;
+    font-size: 0.75rem;
+}
+
+/* DataTables override */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 1rem;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid var(--ks-border);
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    margin-left: 0.5rem;
+}

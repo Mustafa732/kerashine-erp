@@ -1,0 +1,121 @@
+@model IEnumerable<KerashineERP.Models.Inventory.INV_StockTransactionHeader>
+@using KerashineERP.Models.Common
+@{
+    ViewData["Title"] = "Stock Transactions";
+    string currentDocType = ViewBag.CurrentDocType?? "ALL";
+    string currentStatus = ViewBag.CurrentStatus?? "ALL";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Stock Transactions</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary">
+            <i class="fa fa-plus"></i> New Transaction
+        </a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"]!= null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        @if (TempData["Error"]!= null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">@TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <div class="ks-filter-tabs mb-3">
+            <a asp-action="Index" asp-route-docType="ALL" asp-route-status="@currentStatus" 
+               class="ks-filter-tab @(currentDocType == "ALL"? "active" : "")">All</a>
+            @foreach(var dt in ViewBag.DocTypes)
+            {
+                <a asp-action="Index" asp-route-docType="@dt.DocumentType" asp-route-status="@currentStatus" 
+                   class="ks-filter-tab @(currentDocType == dt.DocumentType? "active" : "")">@dt.DocumentType</a>
+            }
+        </div>
+
+        <div class="ks-filter-tabs mb-3">
+            <a asp-action="Index" asp-route-docType="@currentDocType" asp-route-status="ALL" 
+               class="ks-filter-tab @(currentStatus == "ALL"? "active" : "")">All Status</a>
+            <a asp-action="Index" asp-route-docType="@currentDocType" asp-route-status="1" 
+               class="ks-filter-tab warning @(currentStatus == "1"? "active" : "")">In Process</a>
+            <a asp-action="Index" asp-route-docType="@currentDocType" asp-route-status="2" 
+               class="ks-filter-tab success @(currentStatus == "2"? "active" : "")">Approved</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="transTable">
+                <thead>
+                    <tr>
+                        <th style="width:100px">Doc No</th>
+                        <th style="width:100px">Date</th>
+                        <th style="width:120px">Type</th>
+                        <th>From Location</th>
+                        <th>To Location</th>
+                        <th style="width:100px">Amount</th>
+                        <th style="width:100px">Status</th>
+                        <th style="width:120px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.FK_INV_StockTransactionHeader_SET_DocumentType.Prefix-@item.DocumentNo</strong></td>
+                            <td>@item.DocumentDate.ToString("dd-MM-yyyy")</td>
+                            <td>@item.FK_INV_StockTransactionHeader_SET_DocumentType.DocumentType</td>
+                            <td>@item.FK_INV_StockTransactionHeader_SET_Location_From?.LocationName</td>
+                            <td>@item.FK_INV_StockTransactionHeader_SET_Location_To?.LocationName</td>
+                            <td>@item.TotalAmount?.ToString("N2")</td>
+                            <td>
+                                @if (item.StatusCode == (short)TransactionStatus.InProcess)
+                                { <span class="ks-badge ks-badge-warning">In Process</span> }
+                                else if (item.StatusCode == (short)TransactionStatus.Approved)
+                                { <span class="ks-badge ks-badge-success">Approved</span> }
+                                else
+                                { <span class="ks-badge ks-badge-danger">Cancelled</span> }
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.StockTransactionID" class="ks-action-btn view" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                @if (item.StatusCode == (short)TransactionStatus.InProcess)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.StockTransactionID" class="ks-action-btn edit" title="Edit">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@item.StockTransactionID" method="post" style="display:inline" 
+                                          onsubmit="return confirm('Delete this transaction?');">
+                                        <button type="submit" class="ks-action-btn delete" title="Delete">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                    <form asp-action="Approve" asp-route-id="@item.StockTransactionID" method="post" style="display:inline"
+                                          onsubmit="return confirm('Approve this transaction?');">
+                                        <button type="submit" class="ks-action-btn success" title="Approve">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#transTable').DataTable({
+                "order": [[1, "desc"]],
+                "pageLength": 25
+            });
+        });
+    </script>
+}

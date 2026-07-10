@@ -1,0 +1,163 @@
+@model KerashineERP.Models.ViewModels.ProductionViewModel
+@{
+    ViewData["Title"] = "Edit Production";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Edit Production - Batch: @Model.Header.BatchNo</h4>
+    </div>
+    <div class="ks-card-body">
+        <form asp-action="Edit" method="post" id="productionForm">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <!-- ✅ Hidden Fields - Edit ke liye zaroori -->
+            <input type="hidden" asp-for="Header.ProductionID" />
+            <input type="hidden" asp-for="Header.FiscalID" />
+            <input type="hidden" asp-for="Header.CompanyID" />
+            <input type="hidden" asp-for="Header.StatusCode" />
+            <input type="hidden" asp-for="Header.Status" />
+            <input type="hidden" asp-for="Header.BatchNo" />
+            <input type="hidden" asp-for="Header.CreateDate" />
+            <input type="hidden" asp-for="Header.CreatedBy" />
+            <input type="hidden" asp-for="Header.CreatedByValue" />
+
+            <div class="row mb-3">
+                <div class="col-md-2">
+                    <label>Date <span class="text-danger">*</span></label>
+                    <input asp-for="Header.ProductionDate" type="date" class="form-control" required />
+                    <span asp-validation-for="Header.ProductionDate" class="text-danger"></span>
+                </div>
+                <div class="col-md-2">
+                    <label>Batch No</label>
+                    <input asp-for="Header.BatchNo" class="form-control" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label>Product <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ProductID" class="form-control" 
+                            asp-items="@(new SelectList(Model.Products, "ItemId", "ItemName", Model.Header.ProductID))" required>
+                        <option value="">-- Select Product --</option>
+                    </select>
+                    <span asp-validation-for="Header.ProductID" class="text-danger"></span>
+                </div>
+                <div class="col-md-2">
+                    <label>Qty Produced <span class="text-danger">*</span></label>
+                    <input asp-for="Header.QuantityProduced" type="number" step="0.01" class="form-control" id="qtyProduced" required />
+                    <span asp-validation-for="Header.QuantityProduced" class="text-danger"></span>
+                </div>
+                <div class="col-md-3">
+                    <label>Remarks</label>
+                    <input asp-for="Header.Remarks" class="form-control" />
+                </div>
+            </div>
+
+            <h5>Raw Materials Used</h5>
+            <table class="table table-bordered table-sm" id="detailsTable">
+                <thead class="table-light">
+                    <tr>
+                        <th width="10%">Type</th>
+                        <th width="25%">Material <span class="text-danger">*</span></th>
+                        <th width="15%">Qty Used <span class="text-danger">*</span></th>
+                        <th width="15%">Cost/Unit</th>
+                        <th width="15%">Total Cost</th>
+                        <th width="15%">Remarks</th>
+                        <th width="5%"><button type="button" class="btn btn-sm btn-success" onclick="addRow()"><i class="bi bi-plus"></i></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Details.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select name="Details[@i].MaterialType" class="form-control form-control-sm">
+                                    <option value="Raw" selected="@(Model.Details[i].MaterialType == "Raw")">Raw</option>
+                                    <option value="Packaging" selected="@(Model.Details[i].MaterialType == "Packaging")">Packaging</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select name="Details[@i].MaterialID" class="form-control form-control-sm material-select" required>
+                                    <option value="">-- Select --</option>
+                                    @foreach(var item in Model.RawMaterials)
+                                    {
+                                        <option value="@item.ItemId" selected="@(item.ItemId == Model.Details[i].MaterialID)">
+                                            @item.ItemName
+                                        </option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input name="Details[@i].QuantityUsed" type="number" step="0.0001" class="form-control form-control-sm qty" value="@Model.Details[i].QuantityUsed" required /></td>
+                            <td><input name="Details[@i].CostPerUnit" type="number" step="0.01" class="form-control form-control-sm rate" value="@Model.Details[i].CostPerUnit" /></td>
+                            <td><input name="Details[@i].TotalCost" type="number" step="0.01" class="form-control form-control-sm amount" readonly value="@Model.Details[i].TotalCost" /></td>
+                            <td><input name="Details[@i].Remarks" class="form-control form-control-sm" value="@Model.Details[i].Remarks" /></td>
+                            <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-end"><strong>Total Cost:</strong></td>
+                        <td><input id="totalCost" class="form-control form-control-sm" readonly asp-for="Header.TotalCost" /></td>
+                        <td><strong>Cost/Unit:</strong></td>
+                        <td><input id="costPerUnit" class="form-control form-control-sm" readonly asp-for="Header.CostPerUnit" /></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Update Production</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let rowIdx = @Model.Details.Count;
+
+    function addRow() {
+        let newRow = `<tr>
+            <td><select name="Details[${rowIdx}].MaterialType" class="form-control form-control-sm"><option value="Raw">Raw</option><option value="Packaging">Packaging</option></select></td>
+            <td><select name="Details[${rowIdx}].MaterialID" class="form-control form-control-sm material-select" required><option value="">-- Select --</option>@foreach(var item in Model.RawMaterials){<option value="@item.ItemId">@item.ItemName</option>}</select></td>
+            <td><input name="Details[${rowIdx}].QuantityUsed" type="number" step="0.0001" class="form-control form-control-sm qty" required /></td>
+            <td><input name="Details[${rowIdx}].CostPerUnit" type="number" step="0.01" class="form-control form-control-sm rate" /></td>
+            <td><input name="Details[${rowIdx}].TotalCost" type="number" step="0.01" class="form-control form-control-sm amount" readonly /></td>
+            <td><input name="Details[${rowIdx}].Remarks" class="form-control form-control-sm" /></td>
+            <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
+        </tr>`;
+        $('#detailsTable tbody').append(newRow);
+        rowIdx++;
+    }
+
+    function removeRow(btn) {
+        if ($('#detailsTable tbody tr').length > 1) {
+            $(btn).closest('tr').remove();
+            calculateTotal();
+        } else {
+            alert('At least one material is required');
+        }
+    }
+
+    $(document).on('change', '.material-select', function() {
+        let rate = $(this).find(':selected').data('rate') || 0;
+        $(this).closest('tr').find('.rate').val(rate).trigger('input');
+    });
+
+    $(document).on('input', '.qty,.rate,#qtyProduced', function() {
+        let row = $(this).closest('tr');
+        let qty = parseFloat(row.find('.qty').val()) || 0;
+        let rate = parseFloat(row.find('.rate').val()) || 0;
+        row.find('.amount').val((qty * rate).toFixed(2));
+        calculateTotal();
+    });
+
+    function calculateTotal() {
+        let total = 0;
+        $('.amount').each(function() { total += parseFloat($(this).val()) || 0; });
+        $('#totalCost').val(total.toFixed(2));
+        
+        let qtyProduced = parseFloat($('#qtyProduced').val()) || 0;
+        $('#costPerUnit').val(qtyProduced > 0? (total / qtyProduced).toFixed(2) : 0);
+    }
+    
+    calculateTotal();
+</script>
+}

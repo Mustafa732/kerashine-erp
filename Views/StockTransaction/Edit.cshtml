@@ -1,0 +1,203 @@
+@model KerashineERP.Models.ViewModels.StockTransactionViewModel
+@{
+    ViewData["Title"] = "Edit Stock Transaction";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Edit Stock Transaction</h4>
+    </div>
+    <div class="ks-card-body">
+        <form asp-action="Edit" method="post" id="stockForm">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            
+            <!-- ✅ Hidden Fields - Edit ke liye zaroori -->
+            <input type="hidden" asp-for="Header.StockTransactionID" />
+            <input type="hidden" asp-for="Header.FiscalID" />
+            <input type="hidden" asp-for="Header.CompanyID" />
+            <input type="hidden" asp-for="Header.StatusCode" />
+            <input type="hidden" asp-for="Header.Status" />
+            <input type="hidden" asp-for="Header.DocumentNo" />
+            <input type="hidden" asp-for="SelectedDocTypeID" />
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>Doc Type <span class="text-danger">*</span></label>
+                    <select asp-for="Header.DocumentTypeID" class="form-control" 
+                            asp-items="@(new SelectList(Model.DocumentTypes, "DocumentTypeID", "DocumentType", Model.SelectedDocTypeID))" required disabled>
+                        <option value="">-- Select Doc Type --</option>
+                    </select>
+                    <input type="hidden" asp-for="Header.DocumentTypeID" /> <!-- ✅ Disabled field ki value post karne ke liye -->
+                </div>
+                <div class="col-md-3">
+                    <label>Doc No</label>
+                    <input asp-for="Header.DocumentNo" class="form-control" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label>Date <span class="text-danger">*</span></label>
+                    <input asp-for="Header.DocumentDate" type="date" class="form-control" required />
+                </div>
+                <div class="col-md-3" id="fromLocDiv" style="display:none;">
+                    <label>From Location <span class="text-danger">*</span></label>
+                    <select asp-for="Header.FromLocationID" class="form-control" 
+                            asp-items="@(new SelectList(Model.Locations, "LocationID", "LocationName"))">
+                        <option value="">-- Select Location --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3" id="toLocDiv">
+                    <label>To Location <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ToLocationID" class="form-control" 
+                            asp-items="@(new SelectList(Model.Locations, "LocationID", "LocationName"))">
+                        <option value="">-- Select Location --</option>
+                    </select>
+                </div>
+                <div class="col-md-9">
+                    <label>Remarks</label>
+                    <input asp-for="Header.Remarks" class="form-control" />
+                </div>
+            </div>
+
+            <table class="table table-bordered table-sm" id="detailsTable">
+                <thead class="table-light">
+                    <tr>
+                        <th width="25%">Item <span class="text-danger">*</span></th>
+                        <th width="10%">Batch No</th>
+                        <th width="10%">Expiry</th>
+                        <th width="10%">Qty <span class="text-danger">*</span></th>
+                        <th width="10%">Rate</th>
+                        <th width="10%">Amount</th>
+                        <th width="20%">Remarks</th>
+                        <th width="5%"><button type="button" class="btn btn-sm btn-success" onclick="addRow()"><i class="bi bi-plus"></i></button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Details.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select name="Details[@i].ItemID" class="form-control form-control-sm item-select" required>
+                                    <option value="">-- Select Item --</option>
+                                    @foreach(var item in Model.Items)
+                                    {
+                                        <option value="@item.ItemId" data-uom="@item.UOMId" selected="@(item.ItemId == Model.Details[i].ItemID)">
+                                            @item.ItemCode - @item.ItemName
+                                        </option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input name="Details[@i].BatchNo" class="form-control form-control-sm" value="@Model.Details[i].BatchNo" /></td>
+                            <td><input name="Details[@i].ExpiryDate" type="date" class="form-control form-control-sm" value="@(Model.Details[i].ExpiryDate?.ToString("yyyy-MM-dd"))" /></td>
+                            <td><input name="Details[@i].Quantity" type="number" step="0.0001" class="form-control form-control-sm qty" value="@Math.Abs(Model.Details[i].Quantity)" required /></td>
+                            <td><input name="Details[@i].Rate" type="number" step="0.0001" class="form-control form-control-sm rate" value="@Model.Details[i].Rate" /></td>
+                            <td><input name="Details[@i].Amount" type="number" step="0.01" class="form-control form-control-sm amount" readonly value="@Math.Abs(Model.Details[i].Amount)" /></td>
+                            <td><input name="Details[@i].Remarks" class="form-control form-control-sm" value="@Model.Details[i].Remarks" /></td>
+                            <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-end"><strong>Total:</strong></td>
+                        <td><input id="totalAmount" class="form-control form-control-sm" readonly /></td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Update Transaction</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let rowIdx = @Model.Details.Count;
+
+    // DocType change pe Location show/hide
+    $('#Header_DocumentTypeID').change(function() {
+        var docType = $(this).find(':selected').text().trim();
+        
+        if (docType === 'TRANSFER') {
+            $('#fromLocDiv').show();
+            $('#toLocDiv').show();
+            $('#Header_FromLocationID').prop('required', true);
+            $('#Header_ToLocationID').prop('required', true);
+        } 
+        else if (docType === 'ADJUSTMENT_OUT' || docType === 'OPENING' || docType === 'ADJUSTMENT_IN') {
+            $('#fromLocDiv').hide();
+            $('#toLocDiv').show();
+            $('#Header_FromLocationID').prop('required', false);
+            $('#Header_ToLocationID').prop('required', true);
+        } 
+        else {
+            $('#fromLocDiv').hide();
+            $('#toLocDiv').show();
+            $('#Header_FromLocationID').prop('required', false);
+            $('#Header_ToLocationID').prop('required', true);
+        }
+    }).trigger('change');
+
+    function addRow() {
+        let newRow = `<tr>
+            <td>
+                <select name="Details[${rowIdx}].ItemID" class="form-control form-control-sm item-select" required>
+                    <option value="">-- Select Item --</option>
+                    @foreach(var item in Model.Items)
+                    {
+                        <option value="@item.ItemId" data-uom="@item.UOMId">
+                            @item.ItemCode - @item.ItemName
+                        </option>
+                    }
+                </select>
+            </td>
+            <td><input name="Details[${rowIdx}].BatchNo" class="form-control form-control-sm" /></td>
+            <td><input name="Details[${rowIdx}].ExpiryDate" type="date" class="form-control form-control-sm" /></td>
+            <td><input name="Details[${rowIdx}].Quantity" type="number" step="0.0001" class="form-control form-control-sm qty" value="0" required /></td>
+            <td><input name="Details[${rowIdx}].Rate" type="number" step="0.0001" class="form-control form-control-sm rate" value="0" /></td>
+            <td><input name="Details[${rowIdx}].Amount" type="number" step="0.01" class="form-control form-control-sm amount" readonly /></td>
+            <td><input name="Details[${rowIdx}].Remarks" class="form-control form-control-sm" /></td>
+            <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
+        </tr>`;
+        $('#detailsTable tbody').append(newRow);
+        rowIdx++;
+    }
+
+    function removeRow(btn) {
+        if ($('#detailsTable tbody tr').length > 1) {
+            $(btn).closest('tr').remove();
+            calculateTotal();
+        } else {
+            alert('At least one item is required');
+        }
+    }
+
+    // Auto set Rate when item selected
+    $(document).on('change', '.item-select', function() {
+        let rate = $(this).find(':selected').data('rate') || 0;
+        $(this).closest('tr').find('.rate').val(rate).trigger('input');
+    });
+
+    // Auto calculate Amount
+    $(document).on('input', '.qty,.rate', function() {
+        let row = $(this).closest('tr');
+        let qty = parseFloat(row.find('.qty').val()) || 0;
+        let rate = parseFloat(row.find('.rate').val()) || 0;
+        row.find('.amount').val((qty * rate).toFixed(4));
+        calculateTotal();
+    });
+
+    function calculateTotal() {
+        let total = 0;
+        $('.amount').each(function() {
+            total += parseFloat($(this).val()) || 0;
+        });
+        $('#totalAmount').val(total.toFixed(4));
+    }
+
+    calculateTotal();
+</script>
+}

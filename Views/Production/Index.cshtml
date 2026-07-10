@@ -1,0 +1,74 @@
+@model IEnumerable<KerashineERP.Models.Production.PRO_ProductionHeader>
+@{
+    ViewData["Title"] = "Production List";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header d-flex justify-content-between">
+        <h4>Production Batches</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary"><i class="fa fa-plus"></i> New Production</a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"]!= null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"]!= null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        <div class="mb-3">
+            <a asp-action="Index" asp-route-status="ALL" class="btn btn-sm @(ViewBag.CurrentStatus=="ALL"?"btn-primary":"btn-outline-primary")">All</a>
+            <a asp-action="Index" asp-route-status="1" class="btn btn-sm @(ViewBag.CurrentStatus=="1"?"btn-warning":"btn-outline-warning")">In Process</a>
+            <a asp-action="Index" asp-route-status="2" class="btn btn-sm @(ViewBag.CurrentStatus=="2"?"btn-success":"btn-outline-success")">Completed</a>
+        </div>
+
+        <table class="table table-bordered table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th>Batch No</th>
+                    <th>Date</th>
+                    <th>Product</th>
+                    <th>Qty Produced</th>
+                    <th>Total Cost</th>
+                    <th>Cost/Unit</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.BatchNo</td>
+                        <td>@item.ProductionDate.ToString("dd-MM-yyyy")</td>
+                        <td>@item.Product?.ItemName</td>
+                        <td>@item.QuantityProduced</td>
+                        <td>@item.TotalCost.ToString("N2")</td>
+                        <td>@item.CostPerUnit.ToString("N2")</td>
+                        <td>
+                            @if (item.StatusCode == 1)
+                            {<span class="badge bg-warning">In Process</span>}
+                            else
+                            {<span class="badge bg-success">Completed</span>}
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.ProductionID" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                            @if (item.StatusCode == 1)
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ProductionID" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                <form asp-action="Complete" asp-route-id="@item.ProductionID" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Complete this batch?')"><i class="fa fa-check"></i></button>
+                                </form>
+                                <form asp-action="Delete" asp-route-id="@item.ProductionID" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete?')"><i class="fa fa-trash"></i></button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

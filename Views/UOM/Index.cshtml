@@ -1,0 +1,75 @@
+@model IEnumerable<KerashineERP.Models.Inventory.INV_SET_UOM>
+@{
+    ViewData["Title"] = "Units of Measure";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Units of Measure</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary">
+            <i class="fa-solid fa-plus"></i> Add New
+        </a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"]!= null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="uomTable">
+                <thead>
+                    <tr>
+                        <th style="width:120px">@Html.DisplayNameFor(model => model.UOMCode)</th>
+                        <th>@Html.DisplayNameFor(model => model.UOMName)</th>
+                        <th>Description</th>
+                        <th style="width:100px">Status</th>
+                        <th style="width:130px">Created Date</th>
+                        <th style="width:90px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><code style="background:#f1f5f9; padding:0.25rem 0.5rem; border-radius:4px; font-weight:600;">@item.UOMCode</code></td>
+                            <td><strong>@item.UOMName</strong></td>
+                            <td>@item.Description</td>
+                            <td>
+                                @if (item.IsActive)
+                                { <span class="ks-badge ks-badge-success">Active</span> }
+                                else
+                                { <span class="ks-badge ks-badge-danger">Inactive</span> }
+                            </td>
+                            <td>@item.CreateDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.UOMId" class="ks-action-btn edit" title="Edit">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.UOMId" class="ks-action-btn delete" title="Delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#uomTable').DataTable({
+                "pageLength": 25,
+                "order": [[1, "asc"]],
+                "columnDefs": [
+                    { "orderable": false, "targets": 5 }
+                ]
+            });
+        });
+    </script>
+}
