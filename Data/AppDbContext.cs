@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using KerashineERP.Models.Inventory;
 using KerashineERP.Models.Master;
-using KerashineERP.Models.Production;
 
 namespace KerashineERP.Data
 {
@@ -28,9 +27,6 @@ namespace KerashineERP.Data
         // Stock Transactions
         public DbSet<INV_StockTransactionHeader> INV_StockTransactionHeader { get; set; }
         public DbSet<INV_StockTransactionDetail> INV_StockTransactionDetail { get; set; }
-
-        public DbSet<PRO_ProductionHeader> PRO_ProductionHeader { get; set; }
-        public DbSet<PRO_ProductionDetail> PRO_ProductionDetail { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

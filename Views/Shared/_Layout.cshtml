@@ -117,67 +117,6 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" || ViewContext.RouteData.Values["Controller"]?.ToString() == "BOM"? "active" : "")" 
-                        href="#" data-bs-toggle="collapse" data-bs-target="#productionMenu">
-                            <i class="ti ti-flask"></i>
-                            <span>Production</span>
-                        </a>
-                        <div class="collapse @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" || ViewContext.RouteData.Values["Controller"]?.ToString() == "BOM"? "show" : "")" id="productionMenu">
-                            <ul class="nav flex-column ms-3">
-                                <!-- ✅ Ye new line add karo -->
-                                <li class="nav-item">
-                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Production"? "active" : "")" 
-                                    asp-controller="Production" asp-action="Index">
-                                        <i class="ti ti-box"></i>
-                                        <span>Production Entry</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <i class="ti ti-list"></i>
-                                        <span>BOM</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        <i class="ti ti-playlist-add"></i>
-                                        <span>Production Order</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#salesMenu">
-                            <i class="ti ti-shopping-cart"></i>
-                            <span>Sales</span>
-                        </a>
-                        <div class="collapse" id="salesMenu">
-                            <ul class="nav flex-column ms-3">
-                                <li class="nav-item"><a class="nav-link" href="#"><i class="ti ti-users"></i><span>Customers</span></a></li>
-                                <li class="nav-item"><a class="nav-link" href="#"><i class="ti ti-receipt"></i><span>Sales Invoice</span></a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#purchaseMenu">
-                            <i class="ti ti-shopping-bag"></i>
-                            <span>Purchase</span>
-                        </a>
-                        <div class="collapse" id="purchaseMenu">
-                            <ul class="nav flex-column ms-3">
-                                <li class="nav-item"><a class="nav-link" href="#"><i class="ti ti-truck"></i><span>Suppliers</span></a></li>
-                                <li class="nav-item"><a class="nav-link" href="#"><i class="ti ti-file-invoice"></i><span>Purchase Invoice</span></a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="ti ti-report-analytics"></i>
-                            <span>Reports</span>
-                        </a>
-                    </li>
                 </ul>
             </nav>
         </aside>

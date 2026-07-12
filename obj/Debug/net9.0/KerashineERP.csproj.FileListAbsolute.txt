@@ -234,3 +234,4 @@ D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.genruntimeconfig.cache
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\ref\KerashineERP.dll
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.sourcelink.json
