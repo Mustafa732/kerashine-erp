@@ -1,0 +1,183 @@
+@model KerashineERP.Models.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .small-box {
+        border-radius: 10px;
+        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+        position: relative;
+        display: block;
+        margin-bottom: 20px;
+        transition: all .3s ease;
+    }
+    .small-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 25px rgba(0,0,0,.15);
+    }
+    .small-box > .inner {
+        padding: 20px;
+    }
+    .small-box h3 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+        white-space: nowrap;
+    }
+    .small-box p {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+    .small-box .icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 70px;
+        color: rgba(0,0,0,0.15);
+        transition: all .3s linear;
+    }
+    .small-box:hover .icon {
+        font-size: 75px;
+    }
+    .bg-gradient-info { background: linear-gradient(45deg, #17a2b8, #117a8b) !important; color: #fff; }
+    .bg-gradient-warning { background: linear-gradient(45deg, #ffc107, #d39e00) !important; color: #1f2d3d; }
+    .bg-gradient-success { background: linear-gradient(45deg, #28a745, #1e7e34) !important; color: #fff; }
+    .bg-gradient-danger { background: linear-gradient(45deg, #dc3545, #bd2130) !important; color: #fff; }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 font-weight-bold">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <!-- KPI Cards -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-gradient-info">
+                    <div class="inner">
+                        <h3>@Model.TotalItems</h3>
+                        <p>Total Active Items</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-cubes"></i></div>
+                    <a href="/ItemMaster" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-gradient-warning">
+                    <div class="inner">
+                        <h3>@Model.RawMaterialCount</h3>
+                        <p>Raw Materials</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-flask"></i></div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-gradient-success">
+                    <div class="inner">
+                        <h3>@Model.FinishedGoodsCount</h3>
+                        <p>Finished Goods</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-box-open"></i></div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-gradient-danger">
+                    <div class="inner">
+                        <h3>Rs @Model.TotalStockValue.ToString("N0")</h3>
+                        <p>Stock Valuation</p>
+                    </div>
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Low Stock Alert -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">
+                            <i class="fas fa-exclamation-triangle text-danger mr-1"></i>
+                            Low Stock Alert
+                        </h3>
+                        <div class="card-tools">
+                            <span class="badge badge-danger">@Model.LowStockItems.Count() Items</span>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover table-valign-middle">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Item Name</th>
+                                    <th>Type</th>
+                                    <th class="text-center">Current Stock</th>
+                                    <th class="text-center">Reorder Level</th>
+                                    <th class="text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.LowStockItems.Any())
+                                {
+                                    @foreach(var item in Model.LowStockItems)
+                                    {
+                                        <tr>
+                                            <td><span class="text-muted font-weight-bold">@item.ItemCode</span></td>
+                                            <td>@item.ItemName</td>
+                                            <td>
+                                                @if(item.ItemType == "RM") {
+                                                    <span class="badge bg-warning">Raw Material</span>
+                                                } else if(item.ItemType == "FG") {
+                                                    <span class="badge bg-success">Finished Good</span>
+                                                } else {
+                                                    <span class="badge bg-info">@item.ItemType</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="text-danger font-weight-bold">@item.CurrentStock @item.StockUOM</span>
+                                            </td>
+                                            <td class="text-center">@item.ReorderLevel @item.StockUOM</td>
+                                            <td class="text-center">
+                                                <span class="badge badge-danger">Low</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" class="text-center py-5">
+                                            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                                            <p class="text-muted mb-0">All stocks are above reorder level. Great job!</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

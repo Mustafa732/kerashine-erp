@@ -4,6 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Kerashine ERP</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 - YE MISSING THA -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons-webfont@latest/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
@@ -14,46 +27,205 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     
     <style>
-       .erp-wrapper { display: flex; min-height: 100vh; }
-       .erp-sidebar { width: 260px; background: #1e293b; color: #fff; position: fixed; height: 100vh; overflow-y: auto; transition: all 0.3s; z-index: 1000; }
-       .erp-sidebar.show { left: 0; }
-        @@media (max-width: 992px) {.erp-sidebar { left: -260px; } }
-       .sidebar-header { padding: 1.5rem 1rem; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
-       .sidebar-brand { color: #fff; text-decoration: none; font-size: 1.25rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
-       .sidebar-brand:hover { color: #60a5fa; }
-       .sidebar-toggle { background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
-       .sidebar-nav { padding: 1rem 0; }
-       .sidebar-nav .nav-link { 
-            color: #cbd5e1; 
-            padding: 0.75rem 1rem; 
-            display: flex; 
-            align-items: center; 
-            gap: 0.75rem; 
-            transition: all 0.2s; 
-            border-left: 3px solid transparent; 
+        :root {
+            --sidebar-width: 260px;
+            --primary: #3b82f6;
+            --dark: #0f172a;
+            --sidebar-bg: #1e293b;
+            --hover: #334155;
         }
-        .sidebar-nav .nav-link:hover,
-        .sidebar-nav .nav-link.active { 
-            background: #334155; 
-            color: #fff; 
-            border-left-color: #3b82f6; 
+        
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #f1f5f9; }
+        
+        /* Sidebar */
+        .erp-sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 1000;
         }
-        .sidebar-nav .nav-link i { font-size: 1.25rem; }
-        .sidebar-nav .dropdown-toggle::after { margin-left: auto; }
-        .sidebar-nav .collapse .nav-link { padding-left: 3.5rem; font-size: 0.9rem; }
-       .erp-main { flex: 1; margin-left: 260px; display: flex; flex-direction: column; min-height: 100vh; }
-        @@media (max-width: 992px) {.erp-main { margin-left: 0; } }
-       .erp-topbar { background: #fff; border-bottom: 1px solid #e2e8f0; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 999; }
-       .topbar-search { position: relative; flex: 1; max-width: 400px; }
-       .topbar-search i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; }
-       .topbar-search input { padding-left: 2.5rem; border: 1px solid #e2e8f0; }
-       .topbar-right { display: flex; align-items: center; gap: 1rem; }
-       .btn-icon { background: none; border: none; font-size: 1.25rem; color: #64748b; position: relative; }
-       .btn-icon.badge { position: absolute; top: -5px; right: -5px; background: #ef4444; color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
-       .user-dropdown { background: none; border: none; display: flex; align-items: center; gap: 0.5rem; color: #1e293b; }
-       .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: #3b82f6; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; }
-       .erp-content { flex: 1; padding: 1.5rem; background: #f8fafc; }
-       .card { border: none; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        
+        .sidebar-header {
+            padding: 1.5rem 1.25rem;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .sidebar-brand {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .sidebar-brand:hover { color: #60a5fa; }
+        .sidebar-brand i { font-size: 1.75rem; color: #3b82f6; }
+        
+        .sidebar-nav { padding: 1rem 0; }
+        .sidebar-nav .nav-link {
+            color: #cbd5e1;
+            padding: 0.875rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .sidebar-nav .nav-link:hover {
+            background: var(--hover);
+            color: #fff;
+        }
+        
+        .sidebar-nav .nav-link.active {
+            background: var(--hover);
+            color: #fff;
+            border-left-color: var(--primary);
+        }
+        
+        .sidebar-nav .nav-link i { font-size: 1.25rem; width: 24px; }
+        
+        .sidebar-nav .dropdown-toggle::after {
+            margin-left: auto;
+        }
+        
+        .sidebar-nav .collapse .nav-link {
+            padding-left: 3.75rem;
+            font-size: 0.9rem;
+            padding-top: 0.65rem;
+            padding-bottom: 0.65rem;
+        }
+        
+        /* Main Content */
+        .erp-main {
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Topbar */
+        .erp-topbar {
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        .topbar-search {
+            position: relative;
+            max-width: 400px;
+            flex: 1;
+        }
+        
+        .topbar-search i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        
+        .topbar-search input {
+            padding-left: 2.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+        
+        .btn-icon {
+            background: none;
+            border: none;
+            font-size: 1.35rem;
+            color: #64748b;
+            position: relative;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        
+        .btn-icon:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+        
+        .btn-icon .badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: #ef4444;
+            color: #fff;
+            border-radius: 10px;
+            padding: 2px 6px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+        
+        .user-dropdown {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        
+        .user-dropdown:hover { background: #f1f5f9; }
+        
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        .erp-content {
+            flex: 1;
+            padding: 1.5rem;
+        }
+        
+        /* Mobile */
+        @@media (max-width: 992px) {
+            .erp-sidebar { left: -260px; }
+            .erp-sidebar.show { left: 0; }
+            .erp-main { margin-left: 0; }
+        }
+        
+        /* Cards override */
+        .card {
+            border: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
@@ -61,59 +233,60 @@
         <!-- Sidebar -->
         <aside class="erp-sidebar" id="erpSidebar">
             <div class="sidebar-header">
-                <a class="sidebar-brand" asp-controller="Home" asp-action="Index">
-                    <i class="ti ti-building-factory-2"></i>
+                <a class="sidebar-brand" asp-controller="Dashboard" asp-action="Index">
+                    <i class="fa-solid fa-industry"></i>
                     <span>Kerashine ERP</span>
                 </a>
-                <button class="sidebar-toggle d-lg-none" id="sidebarClose">
-                    <i class="ti ti-x"></i>
+                <button class="d-lg-none btn-icon text-white" id="sidebarClose">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             
             <nav class="sidebar-nav">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home"? "active" : "")" asp-controller="Home" asp-action="Index">
-                            <i class="ti ti-dashboard"></i>
+                        <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" ? "active" : "")" 
+                           asp-controller="Dashboard" asp-action="Index">
+                            <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" || ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Item"? "active" : "")" href="#" data-bs-toggle="collapse" data-bs-target="#inventoryMenu">
-                            <i class="ti ti-building-warehouse"></i>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" || ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" || ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "active" : "")" 
+                           href="#" data-bs-toggle="collapse" data-bs-target="#inventoryMenu">
+                            <i class="fa-solid fa-warehouse"></i>
                             <span>Inventory</span>
                         </a>
-                        <div class="collapse @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" || ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Item"? "show" : "")" id="inventoryMenu">
-                            <ul class="nav flex-column ms-3">
+                        <div class="collapse @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" || ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" || ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "show" : "")" id="inventoryMenu">
+                            <ul class="nav flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory"? "active" : "")" asp-controller="ItemCategory" asp-action="Index">
-                                        <i class="ti ti-category"></i>
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" ? "active" : "")" 
+                                       asp-controller="ItemCategory" asp-action="Index">
+                                        <i class="fa-solid fa-tags"></i>
                                         <span>Item Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM"? "active" : "")" asp-controller="UOM" asp-action="Index">
-                                        <i class="ti ti-ruler-2"></i>
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" ? "active" : "")" 
+                                       asp-controller="UOM" asp-action="Index">
+                                        <i class="fa-solid fa-ruler"></i>
                                         <span>Units of Measure</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Item"? "active" : "")" asp-controller="Item" asp-action="Index">
-                                        <i class="ti ti-package"></i>
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" ? "active" : "")" 
+                                       asp-controller="Item" asp-action="Index">
+                                        <i class="fa-solid fa-box"></i>
                                         <span>Item Master</span>
                                     </a>
                                 </li>
-
-                                @* Stock Transaction Menu Start *@
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "active" : "")" 
-                                    asp-controller="StockTransaction" asp-action="Index">
-                                        <i class="ti ti-box"></i>
+                                       asp-controller="StockTransaction" asp-action="Index">
+                                        <i class="fa-solid fa-right-left"></i>
                                         <span>Stock Transactions</span>
                                     </a>
                                 </li>
-                                @* Stock Transaction Menu End *@
-
                             </ul>
                         </div>
                     </li>
@@ -123,20 +296,20 @@
 
         <!-- Main Content -->
         <div class="erp-main">
-            <!-- Top Navbar -->
+            <!-- Topbar -->
             <header class="erp-topbar">
-                <button class="sidebar-toggle d-lg-none" id="sidebarToggle">
-                    <i class="ti ti-menu-2"></i>
+                <button class="btn-icon d-lg-none" id="sidebarToggle">
+                    <i class="fa-solid fa-bars"></i>
                 </button>
 
                 <div class="topbar-search d-none d-md-block">
-                    <i class="ti ti-search"></i>
+                    <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Search..." class="form-control" />
                 </div>
 
                 <div class="topbar-right">
                     <button class="btn-icon">
-                        <i class="ti ti-bell"></i>
+                        <i class="fa-regular fa-bell"></i>
                         <span class="badge">3</span>
                     </button>
                     
@@ -145,58 +318,55 @@
                         <div class="dropdown">
                             <button class="user-dropdown" data-bs-toggle="dropdown">
                                 <div class="user-avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</div>
-                                <span class="d-none d-sm-inline">@User.Identity.Name</span>
-                                <i class="ti ti-chevron-down"></i>
+                                <div class="d-none d-sm-block text-start">
+                                    <div style="font-size: 0.875rem; font-weight: 600; color: #1e293b;">@User.Identity.Name</div>
+                                    <div style="font-size: 0.75rem; color: #64748b;">@Context.Session.GetString("CompanyName")</div>
+                                </div>
+                                <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem; color: #94a3b8;"></i>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#"><i class="ti ti-user"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="ti ti-settings"></i> Settings</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i> Settings</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form asp-controller="Account" asp-action="Logout" method="post">
                                         <button type="submit" class="dropdown-item text-danger">
-                                            <i class="ti ti-logout"></i> Logout
+                                            <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
                                         </button>
                                     </form>
                                 </li>
                             </ul>
                         </div>
                     }
-                    else
-                    {
-                        <a class="btn btn-primary btn-sm" asp-controller="Account" asp-action="Login">Login</a>
-                    }
                 </div>
             </header>
 
             <!-- Page Content -->
             <main class="erp-content">
-                <div class="container-fluid">
-                    @RenderBody()
-                </div>
+                @RenderBody()
             </main>
         </div>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    
     <script>
-        // Sidebar toggle for mobile
+        // Sidebar toggle
         document.getElementById('sidebarToggle')?.addEventListener('click', () => {
             document.getElementById('erpSidebar').classList.add('show');
         });
         document.getElementById('sidebarClose')?.addEventListener('click', () => {
             document.getElementById('erpSidebar').classList.remove('show');
         });
-
-        // Close sidebar when clicking outside on mobile
+        
+        // Close on outside click
         document.addEventListener('click', (e) => {
             const sidebar = document.getElementById('erpSidebar');
             const toggle = document.getElementById('sidebarToggle');
-            if (window.innerWidth < 992 &&!sidebar.contains(e.target) &&!toggle.contains(e.target)) {
+            if (window.innerWidth < 992 && !sidebar.contains(e.target) && !toggle?.contains(e.target)) {
                 sidebar.classList.remove('show');
             }
         });

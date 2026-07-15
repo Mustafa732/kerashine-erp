@@ -58,7 +58,7 @@ public class HomeController : Controller
         HttpContext.Session.SetString("CompanyName", company?.CompanyName?? "");
         HttpContext.Session.SetString("FiscalYear", fiscal?.FiscalYear?? "");
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Dashboard");
     }
 
     // Get Companies by Business - AJAX
