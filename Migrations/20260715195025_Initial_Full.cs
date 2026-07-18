@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace KerashineERP.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial_Full : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,10 +62,10 @@ namespace KerashineERP.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -85,10 +85,10 @@ namespace KerashineERP.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -108,10 +108,10 @@ namespace KerashineERP.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -127,15 +127,15 @@ namespace KerashineERP.Migrations
                     DocumentTypeID = table.Column<int>(type: "int", nullable: false),
                     DocumentType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
-                    TransactionType = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    TransactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Prefix = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -158,10 +158,10 @@ namespace KerashineERP.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -179,10 +179,10 @@ namespace KerashineERP.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -319,10 +319,10 @@ namespace KerashineERP.Migrations
                     ItemImage = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -358,10 +358,10 @@ namespace KerashineERP.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -392,10 +392,10 @@ namespace KerashineERP.Migrations
                     StatusCode = table.Column<short>(type: "smallint", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -428,6 +428,38 @@ namespace KerashineERP.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PRO_RecipeHeader",
+                columns: table => new
+                {
+                    CompanyID = table.Column<int>(type: "int", nullable: false),
+                    RecipeID = table.Column<int>(type: "int", nullable: false),
+                    ProductID = table.Column<int>(type: "int", nullable: false),
+                    RecipeCode = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    RecipeName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    BatchSize = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    BatchSizeUOM = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PRO_RecipeHeader", x => new { x.CompanyID, x.RecipeID });
+                    table.ForeignKey(
+                        name: "FK_PRO_RecipeHeader_INV_Item_CompanyID_ProductID",
+                        columns: x => new { x.CompanyID, x.ProductID },
+                        principalTable: "INV_Item",
+                        principalColumns: new[] { "CompanyID", "ItemId" },
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "INV_StockTransactionDetail",
                 columns: table => new
                 {
@@ -443,10 +475,10 @@ namespace KerashineERP.Migrations
                     Remarks = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", maxLength: 450, nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
                 },
                 constraints: table =>
@@ -463,6 +495,49 @@ namespace KerashineERP.Migrations
                         columns: x => new { x.CompanyID, x.StockTransactionID },
                         principalTable: "INV_StockTransactionHeader",
                         principalColumns: new[] { "CompanyID", "StockTransactionID" },
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PRO_RecipeDetail",
+                columns: table => new
+                {
+                    CompanyID = table.Column<int>(type: "int", nullable: false),
+                    RecipeID = table.Column<int>(type: "int", nullable: false),
+                    RecipeDetailID = table.Column<int>(type: "int", nullable: false),
+                    MaterialID = table.Column<int>(type: "int", nullable: false),
+                    QuantityRequired = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    UOMId = table.Column<int>(type: "int", nullable: false),
+                    WastagePercent = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UpdatedByValue = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PRO_RecipeDetail", x => new { x.CompanyID, x.RecipeID, x.RecipeDetailID });
+                    table.ForeignKey(
+                        name: "FK_PRO_RecipeDetail_INV_Item_CompanyID_MaterialID",
+                        columns: x => new { x.CompanyID, x.MaterialID },
+                        principalTable: "INV_Item",
+                        principalColumns: new[] { "CompanyID", "ItemId" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PRO_RecipeDetail_INV_SET_UOM_CompanyID_UOMId",
+                        columns: x => new { x.CompanyID, x.UOMId },
+                        principalTable: "INV_SET_UOM",
+                        principalColumns: new[] { "CompanyID", "UOMId" },
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PRO_RecipeDetail_PRO_RecipeHeader_CompanyID_RecipeID",
+                        columns: x => new { x.CompanyID, x.RecipeID },
+                        principalTable: "PRO_RecipeHeader",
+                        principalColumns: new[] { "CompanyID", "RecipeID" },
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -541,6 +616,21 @@ namespace KerashineERP.Migrations
                 columns: new[] { "CompanyID", "ToLocationID" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_PRO_RecipeDetail_CompanyID_MaterialID",
+                table: "PRO_RecipeDetail",
+                columns: new[] { "CompanyID", "MaterialID" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PRO_RecipeDetail_CompanyID_UOMId",
+                table: "PRO_RecipeDetail",
+                columns: new[] { "CompanyID", "UOMId" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PRO_RecipeHeader_CompanyID_ProductID",
+                table: "PRO_RecipeHeader",
+                columns: new[] { "CompanyID", "ProductID" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SET_Company_BusinessID",
                 table: "SET_Company",
                 column: "BusinessID");
@@ -568,6 +658,9 @@ namespace KerashineERP.Migrations
                 name: "INV_StockTransactionDetail");
 
             migrationBuilder.DropTable(
+                name: "PRO_RecipeDetail");
+
+            migrationBuilder.DropTable(
                 name: "SET_Company");
 
             migrationBuilder.DropTable(
@@ -577,19 +670,13 @@ namespace KerashineERP.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "INV_Item");
-
-            migrationBuilder.DropTable(
                 name: "INV_StockTransactionHeader");
 
             migrationBuilder.DropTable(
+                name: "PRO_RecipeHeader");
+
+            migrationBuilder.DropTable(
                 name: "SET_Business");
-
-            migrationBuilder.DropTable(
-                name: "INV_SET_Category");
-
-            migrationBuilder.DropTable(
-                name: "INV_SET_UOM");
 
             migrationBuilder.DropTable(
                 name: "SET_DocumentType");
@@ -599,6 +686,15 @@ namespace KerashineERP.Migrations
 
             migrationBuilder.DropTable(
                 name: "SET_Location");
+
+            migrationBuilder.DropTable(
+                name: "INV_Item");
+
+            migrationBuilder.DropTable(
+                name: "INV_SET_Category");
+
+            migrationBuilder.DropTable(
+                name: "INV_SET_UOM");
         }
     }
 }

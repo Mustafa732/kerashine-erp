@@ -4,6 +4,7 @@ using KerashineERP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KerashineERP.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260718150911_Add_ProductionOrder_And_Cleanup")]
+    partial class Add_ProductionOrder_And_Cleanup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -728,168 +731,6 @@ namespace KerashineERP.Migrations
                     b.ToTable("SET_Location");
                 });
 
-            modelBuilder.Entity("KerashineERP.Models.Production.PRO_ProductionOrderDetail", b =>
-                {
-                    b.Property<int>("CompanyID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("ProductionOrderID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<int>("ProductionOrderDetailID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(2);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreateDate");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatedBy");
-
-                    b.Property<string>("CreatedByValue")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("CreatedByValue");
-
-                    b.Property<decimal>("IssuedQty")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<int>("MaterialID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<decimal>("RequiredQty")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
-                        .HasColumnName("Status");
-
-                    b.Property<int?>("UOMId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdateDate");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<string>("UpdatedByValue")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("UpdatedByValue");
-
-                    b.Property<decimal>("WastagePercent")
-                        .HasColumnType("decimal(5,2)");
-
-                    b.HasKey("CompanyID", "ProductionOrderID", "ProductionOrderDetailID");
-
-                    b.HasIndex("CompanyID", "MaterialID");
-
-                    b.HasIndex("CompanyID", "UOMId");
-
-                    b.ToTable("PRO_ProductionOrderDetail");
-                });
-
-            modelBuilder.Entity("KerashineERP.Models.Production.PRO_ProductionOrderHeader", b =>
-                {
-                    b.Property<int>("CompanyID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(0);
-
-                    b.Property<int>("ProductionOrderID")
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    b.Property<decimal>("BatchSize")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<string>("BatchSizeUOM")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreateDate");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatedBy");
-
-                    b.Property<string>("CreatedByValue")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("CreatedByValue");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("PlannedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("PlannedQty")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProductionOrderNo")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<int>("RecipeID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
-                        .HasColumnName("Status");
-
-                    b.Property<short>("StatusCode")
-                        .HasColumnType("smallint");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdateDate");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<string>("UpdatedByValue")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("UpdatedByValue");
-
-                    b.HasKey("CompanyID", "ProductionOrderID");
-
-                    b.HasIndex("CompanyID", "ProductID");
-
-                    b.HasIndex("CompanyID", "RecipeID");
-
-                    b.ToTable("PRO_ProductionOrderHeader");
-                });
-
             modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeDetail", b =>
                 {
                     b.Property<int>("CompanyID")
@@ -1314,50 +1155,6 @@ namespace KerashineERP.Migrations
                     b.Navigation("Business");
                 });
 
-            modelBuilder.Entity("KerashineERP.Models.Production.PRO_ProductionOrderDetail", b =>
-                {
-                    b.HasOne("KerashineERP.Models.Inventory.INV_Item", "Material")
-                        .WithMany()
-                        .HasForeignKey("CompanyID", "MaterialID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KerashineERP.Models.Production.PRO_ProductionOrderHeader", "Header")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("CompanyID", "ProductionOrderID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KerashineERP.Models.Inventory.INV_SET_UOM", "UOM")
-                        .WithMany()
-                        .HasForeignKey("CompanyID", "UOMId");
-
-                    b.Navigation("Header");
-
-                    b.Navigation("Material");
-
-                    b.Navigation("UOM");
-                });
-
-            modelBuilder.Entity("KerashineERP.Models.Production.PRO_ProductionOrderHeader", b =>
-                {
-                    b.HasOne("KerashineERP.Models.Inventory.INV_Item", "Product")
-                        .WithMany()
-                        .HasForeignKey("CompanyID", "ProductID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("KerashineERP.Models.Production.PRO_RecipeHeader", "Recipe")
-                        .WithMany()
-                        .HasForeignKey("CompanyID", "RecipeID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Recipe");
-                });
-
             modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeDetail", b =>
                 {
                     b.HasOne("KerashineERP.Models.Inventory.INV_Item", "Material")
@@ -1455,11 +1252,6 @@ namespace KerashineERP.Migrations
             modelBuilder.Entity("KerashineERP.Models.Master.SET_Business", b =>
                 {
                     b.Navigation("Companies");
-                });
-
-            modelBuilder.Entity("KerashineERP.Models.Production.PRO_ProductionOrderHeader", b =>
-                {
-                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeHeader", b =>

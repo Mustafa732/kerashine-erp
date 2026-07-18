@@ -1,0 +1,60 @@
+@model KerashineERP.Models.Production.PRO_RecipeHeader
+@{
+    ViewData["Title"] = "Delete Recipe";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header" style="background: var(--ks-danger); color: #fff;">
+        <h4><i class="fa-solid fa-triangle-exclamation"></i> Delete Recipe</h4>
+    </div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2; border:1px solid #fecaca; color:#991b1b; border-radius:6px; padding:1rem; margin-bottom:1.5rem;">
+            <h5 style="margin:0 0 0.5rem 0; font-size:1rem; font-weight:600;">
+                <i class="fa-solid fa-circle-info"></i> Are you sure you want to delete this recipe?
+            </h5>
+            <p style="margin:0; font-size:0.875rem;">This will soft delete the recipe. It won't be deleted permanently from database.</p>
+        </div>
+
+        <dl class="row">
+            <dt class="col-sm-3 ks-form-label">Recipe Code</dt>
+            <dd class="col-sm-9" style="margin-bottom:1rem;">
+                <code style="background:var(--ks-bg-light); padding:0.25rem 0.5rem; border-radius:4px;">@Model.RecipeCode</code>
+            </dd>
+
+            <dt class="col-sm-3 ks-form-label">Recipe Name</dt>
+            <dd class="col-sm-9" style="margin-bottom:1rem;">
+                <strong>@Model.RecipeName</strong>
+            </dd>
+
+            <dt class="col-sm-3 ks-form-label">FG Product</dt>
+            <dd class="col-sm-9" style="margin-bottom:1rem;">
+                @Model.Product?.ItemCode - @Model.Product?.ItemName
+            </dd>
+
+            <dt class="col-sm-3 ks-form-label">Batch Size</dt>
+            <dd class="col-sm-9" style="margin-bottom:1rem;">
+                @Model.BatchSize @Model.BatchSizeUOM
+            </dd>
+
+            <dt class="col-sm-3 ks-form-label">Status</dt>
+            <dd class="col-sm-9" style="margin-bottom:1rem;">
+                @if (Model.IsActive)
+                { <span class="ks-badge ks-badge-success">Active</span> }
+                else
+                { <span class="ks-badge ks-badge-danger">Inactive</span> }
+            </dd>
+        </dl>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="RecipeID" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="ks-btn" style="background:var(--ks-danger); color:#fff;">
+                    <i class="fa-solid fa-trash"></i> Delete
+                </button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0; color:var(--ks-dark);">
+                    <i class="fa-solid fa-arrow-left"></i> Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

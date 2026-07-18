@@ -1,0 +1,104 @@
+@model KerashineERP.Models.ViewModels.ProductionOrderViewModel
+@{
+    ViewData["Title"] = "Create Production Order";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Create Production Order</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Create" method="post" id="prodForm">
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>FG Product <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ProductID" class="form-control" id="ProductID" required>
+                        <option value="">-- Select FG --</option>
+                        @foreach (var fg in Model.FGItems){
+                            <option value="@fg.ItemId">@fg.ItemCode - @fg.ItemName (@fg.ItemSize @fg.SizeUOM)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Recipe <span class="text-danger">*</span></label>
+                    <select asp-for="Header.RecipeID" class="form-control" id="RecipeID" required>
+                        <option value="">-- Select Recipe --</option>
+                        @foreach (var r in Model.Recipes){
+                            <option value="@r.RecipeID">@r.RecipeCode - @r.RecipeName</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Planned Qty <span class="text-danger">*</span></label>
+                    <input asp-for="Header.PlannedQty" id="PlannedQty" type="number" step="0.0001" class="form-control" value="1" required />
+                </div>
+                <div class="col-md-2">
+                    <label>Planned Date <span class="text-danger">*</span></label>
+                    <input asp-for="Header.PlannedDate" class="form-control" type="date" required />
+                </div>
+                <div class="col-md-2">
+                    <label>Batch Size</label>
+                    <input asp-for="Header.BatchSize" id="BatchSize" type="number" step="0.0001" class="form-control" readonly style="background:#f8fafc;" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-2">
+                    <label>Batch UOM</label>
+                    <input asp-for="Header.BatchSizeUOM" id="BatchSizeUOM" class="form-control" value="KG" readonly style="background:#f8fafc;" />
+                </div>
+                <div class="col-md-10">
+                    <label>Remarks</label>
+                    <input asp-for="Header.Remarks" class="form-control" placeholder="Optional" />
+                </div>
+            </div>
+
+            <h6 class="mt-3">Materials</h6>
+            <table class="table table-bordered table-sm" id="matTable">
+                <thead class="table-light">
+                    <tr>
+                        <th width="30%">Material (RM/PM)</th>
+                        <th width="15%">Req Qty <span class="text-danger">*</span></th>
+                        <th width="10%">Wastage %</th>
+                        <th width="15%">UOM</th>
+                        <th width="5%"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button type="button" class="btn btn-sm btn-success mb-3" onclick="addRow()"><i class="bi bi-plus"></i> Add Material</button>
+            <div>
+                <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Save Order</button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+let idx=0;
+let materials = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Materials.Select(x=> new { x.ItemId, x.ItemCode, x.ItemName })));
+let uoms = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.UOMs.Select(x=> new { x.UOMId, x.UOMCode, x.UOMName })));
+
+function addRow(matId=0, qty=0, wastage=0, uomId=0){
+ let row=`<tr>
+  <td><select name="Details[${idx}].MaterialID" class="form-control form-control-sm" required><option value="">-- Select --</option>${materials.map(m=>`<option value="${m.ItemId}" ${m.ItemId==matId?'selected':''}>${m.ItemCode} - ${m.ItemName}</option>`).join('')}</select></td>
+  <td><input name="Details[${idx}].RequiredQty" value="${qty}" type="number" step="0.0001" class="form-control form-control-sm" required /></td>
+  <td><input name="Details[${idx}].WastagePercent" value="${wastage}" type="number" step="0.01" class="form-control form-control-sm" /></td>
+  <td><select name="Details[${idx}].UOMId" class="form-control form-control-sm">${uoms.map(u=>`<option value="${u.UOMId}" ${u.UOMId==uomId?'selected':''}>${u.UOMCode} - ${u.UOMName}</option>`).join('')}</select></td>
+  <td><button type="button" class="btn btn-sm btn-danger" onclick="$(this).closest('tr').remove()"><i class="bi bi-trash"></i></button></td>
+ </tr>`;
+ $("#matTable tbody").append(row); idx++;
+}
+
+$("#RecipeID").change(function(){
+ let id=$(this).val(); if(!id) return;
+ $.getJSON('/Production/GetRecipeHeader?recipeId='+id, function(h){ if(h){ $("#BatchSize").val(h.batchSize); $("#BatchSizeUOM").val(h.batchUOM); } });
+ $.getJSON('/Production/GetRecipeDetails?recipeId='+id, function(data){
+   $("#matTable tbody").html(''); idx=0;
+   let planned = parseFloat($("#PlannedQty").val()||1);
+   data.forEach(d=>{ addRow(d.materialID, d.quantityRequired * planned, d.wastagePercent, d.uomId); });
+ });
+});
+$("#PlannedQty").on('keyup change', function(){
+    // auto recalc if needed later
+});
+</script>
+}

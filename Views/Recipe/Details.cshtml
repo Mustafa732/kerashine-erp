@@ -1,0 +1,64 @@
+@model KerashineERP.Models.Production.PRO_RecipeHeader
+@{
+    ViewData["Title"] = "Recipe Details";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Recipe Details - @Model.RecipeCode</h4>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.RecipeID" class="ks-btn ks-btn-primary">
+                <i class="fa fa-pen"></i> Edit
+            </a>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">
+                <i class="fa fa-arrow-left"></i> Back
+            </a>
+        </div>
+    </div>
+    <div class="ks-card-body">
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Recipe Code:</strong> @Model.RecipeCode</div>
+            <div class="col-md-3"><strong>Recipe Name:</strong> @Model.RecipeName</div>
+            <div class="col-md-3"><strong>FG Product:</strong> @Model.Product?.ItemCode - @Model.Product?.ItemName</div>
+            <div class="col-md-3"><strong>Batch Size:</strong> @Model.BatchSize @Model.BatchSizeUOM</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6"><strong>Remarks:</strong> @Model.Remarks</div>
+            <div class="col-md-3">
+                <strong>Status:</strong>
+                @if (Model.IsActive)
+                { <span class="ks-badge ks-badge-success">Active</span> }
+                else
+                { <span class="ks-badge ks-badge-danger">Inactive</span> }
+            </div>
+        </div>
+
+        <table class="ks-table ks-table-sm">
+            <thead>
+                <tr>
+                    <th>Material Code</th>
+                    <th>Material Name</th>
+                    <th>Type</th>
+                    <th>Qty Required</th>
+                    <th>UOM</th>
+                    <th>Wastage %</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var d in Model.RecipeDetails)
+                {
+                    <tr>
+                        <td>@d.Material?.ItemCode</td>
+                        <td>@d.Material?.ItemName</td>
+                        <td>@d.Material?.ItemType</td>
+                        <td>@d.QuantityRequired.ToString("N4")</td>
+                        <td>@d.UOM?.UOMCode</td>
+                        <td>@d.WastagePercent %</td>
+                        <td>@d.Remarks</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

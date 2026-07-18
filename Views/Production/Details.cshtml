@@ -1,0 +1,60 @@
+@model KerashineERP.Models.Production.PRO_ProductionOrderHeader
+@{
+    ViewData["Title"] = "Production Details";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Production Details - @Model.ProductionOrderNo</h4>
+        <div>
+            @if(Model.StatusCode == 5){
+                <form asp-action="Approve" asp-route-id="@Model.ProductionOrderID" method="post" style="display:inline">
+                    <button class="ks-btn ks-btn-primary" onclick="return confirm('Approve? Once approved cannot edit.')"><i class="fa fa-check"></i> Approve</button>
+                </form>
+            }
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+    <div class="ks-card-body">
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Order No:</strong> @Model.ProductionOrderNo</div>
+            <div class="col-md-3"><strong>FG Product:</strong> @Model.Product?.ItemCode - @Model.Product?.ItemName</div>
+            <div class="col-md-3"><strong>Recipe:</strong> @Model.Recipe?.RecipeCode - @Model.Recipe?.RecipeName</div>
+            <div class="col-md-3"><strong>Batch Size:</strong> @Model.BatchSizeUOM</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Planned Qty:</strong> @Model.PlannedQty</div>
+            <div class="col-md-3"><strong>Planned Date:</strong> @Model.PlannedDate.ToString("dd-MMM-yyyy")</div>
+            <div class="col-md-3">
+                <strong>Status:</strong>
+                @if(Model.StatusCode == 1){ <span class="ks-badge ks-badge-success">Approved</span> }
+                else if(Model.StatusCode == 3){ <span class="ks-badge ks-badge-danger">Cancelled</span> }
+                else { <span class="ks-badge" style="background:#f59e0b;color:white;">In Process</span> }
+            </div>
+            <div class="col-md-3"><strong>Remarks:</strong> @Model.Remarks</div>
+        </div>
+        <table class="ks-table ks-table-sm">
+            <thead>
+                <tr>
+                    <th>Material Code</th>
+                    <th>Material Name</th>
+                    <th>Req Qty</th>
+                    <th>Issued Qty</th>
+                    <th>Wastage %</th>
+                    <th>UOM</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var d in Model.OrderDetails){
+                    <tr>
+                        <td>@d.Material?.ItemCode</td>
+                        <td>@d.Material?.ItemName</td>
+                        <td>@d.RequiredQty.ToString("N4")</td>
+                        <td>@d.IssuedQty.ToString("N4")</td>
+                        <td>@d.WastagePercent %</td>
+                        <td>@d.UOM?.UOMCode</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

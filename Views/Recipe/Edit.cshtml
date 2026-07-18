@@ -1,0 +1,154 @@
+@model KerashineERP.Models.ViewModels.RecipeViewModel
+@{
+    ViewData["Title"] = "Edit Recipe";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Edit Recipe - @Model.Header.RecipeCode</h4>
+    </div>
+    <div class="ks-card-body">
+        <form asp-action="Edit" method="post" id="recipeForm">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Header.RecipeID" />
+            <input type="hidden" asp-for="Header.RecipeCode" />
+            <input type="hidden" asp-for="Header.CompanyID" />
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>FG Product <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ProductID" class="form-control" required>
+                        <option value="">-- Select FG Product --</option>
+                        @foreach (var fg in Model.FGItems)
+                        {
+                            <option value="@fg.ItemId" selected="@(fg.ItemId == Model.Header.ProductID)">
+                                @fg.ItemCode - @fg.ItemName
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Recipe Name <span class="text-danger">*</span></label>
+                    <input asp-for="Header.RecipeName" class="form-control" required />
+                </div>
+                <div class="col-md-2">
+                    <label>Batch Size <span class="text-danger">*</span></label>
+                    <input asp-for="Header.BatchSize" type="number" step="0.0001" class="form-control" required />
+                </div>
+                <div class="col-md-3">
+                    <label>Remarks</label>
+                    <input asp-for="Header.Remarks" class="form-control" />
+                </div>
+            </div>
+
+            <table class="table table-bordered table-sm" id="detailsTable">
+                <thead class="table-light">
+                    <tr>
+                        <th width="30%">Material (RM/PM) <span class="text-danger">*</span></th>
+                        <th width="15%">Qty Required <span class="text-danger">*</span></th>
+                        <th width="15%">UOM</th>
+                        <th width="10%">Wastage %</th>
+                        <th width="20%">Remarks</th>
+                        <th width="5%">
+                            <button type="button" class="btn btn-sm btn-success" onclick="addRow()">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Details.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select name="Details[@i].MaterialID" class="form-control form-control-sm" required>
+                                    <option value="">-- Select --</option>
+                                    @foreach (var mat in Model.Materials)
+                                    {
+                                        <option value="@mat.ItemId" selected="@(mat.ItemId == Model.Details[i].MaterialID)">
+                                            @mat.ItemCode - @mat.ItemName (@mat.ItemType)
+                                        </option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <input name="Details[@i].QuantityRequired" type="number" step="0.0001" class="form-control form-control-sm" value="@Model.Details[i].QuantityRequired" required />
+                            </td>
+                            <td>
+                                <select name="Details[@i].UOMId" class="form-control form-control-sm">
+                                    @foreach (var uom in Model.UOMs)
+                                    {
+                                        <option value="@uom.UOMId" selected="@(uom.UOMId == Model.Details[i].UOMId)">
+                                            @uom.UOMCode - @uom.UOMName
+                                        </option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <input name="Details[@i].WastagePercent" type="number" step="0.01" class="form-control form-control-sm" value="@Model.Details[i].WastagePercent" />
+                            </td>
+                            <td>
+                                <input name="Details[@i].Remarks" class="form-control form-control-sm" value="@Model.Details[i].Remarks" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <button type="submit" class="ks-btn ks-btn-primary">
+                <i class="fa fa-save"></i> Update Recipe
+            </button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">
+                <i class="fa fa-arrow-left"></i> Cancel
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        let rowIdx = @Model.Details.Count;
+
+        function addRow() {
+            let newRow = `<tr>
+                <td>
+                    <select name="Details[${rowIdx}].MaterialID" class="form-control form-control-sm" required>
+                        <option value="">-- Select --</option>
+                        @foreach (var mat in Model.Materials)
+                        {
+                            <option value="@mat.ItemId">@mat.ItemCode - @mat.ItemName (@mat.ItemType)</option>
+                        }
+                    </select>
+                </td>
+                <td><input name="Details[${rowIdx}].QuantityRequired" type="number" step="0.0001" class="form-control form-control-sm" value="0" required /></td>
+                <td>
+                    <select name="Details[${rowIdx}].UOMId" class="form-control form-control-sm">
+                        @foreach (var uom in Model.UOMs)
+                        {
+                            <option value="@uom.UOMId">@uom.UOMCode - @uom.UOMName</option>
+                        }
+                    </select>
+                </td>
+                <td><input name="Details[${rowIdx}].WastagePercent" type="number" step="0.01" class="form-control form-control-sm" value="0" /></td>
+                <td><input name="Details[${rowIdx}].Remarks" class="form-control form-control-sm" /></td>
+                <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
+            </tr>`;
+            $('#detailsTable tbody').append(newRow);
+            rowIdx++;
+        }
+
+        function removeRow(btn) {
+            if ($('#detailsTable tbody tr').length > 1) {
+                $(btn).closest('tr').remove();
+            } else {
+                alert('At least one material is required');
+            }
+        }
+    </script>
+}

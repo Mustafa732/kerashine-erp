@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KerashineERP.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260702203722_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260715195025_Initial_Full")]
+    partial class Initial_Full
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,7 +47,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -115,7 +114,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -133,7 +131,7 @@ namespace KerashineERP.Migrations
                     b.ToTable("INV_Item");
                 });
 
-            modelBuilder.Entity("KerashineERP.Models.Inventory.INV_ItemCategory", b =>
+            modelBuilder.Entity("KerashineERP.Models.Inventory.INV_SET_Category", b =>
                 {
                     b.Property<int>("CompanyID")
                         .HasColumnType("int")
@@ -157,7 +155,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -182,7 +179,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -193,7 +189,7 @@ namespace KerashineERP.Migrations
 
                     b.HasKey("CompanyID", "CategoryId");
 
-                    b.ToTable("INV_ItemCategory");
+                    b.ToTable("INV_SET_Category");
                 });
 
             modelBuilder.Entity("KerashineERP.Models.Inventory.INV_SET_UOM", b =>
@@ -211,7 +207,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -246,7 +241,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -286,7 +280,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -320,7 +313,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -351,7 +343,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -397,7 +388,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -441,7 +431,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -466,7 +455,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -513,7 +501,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -542,7 +529,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -573,7 +559,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -603,15 +588,14 @@ namespace KerashineERP.Migrations
                         .HasColumnName("Status");
 
                     b.Property<string>("TransactionType")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -640,7 +624,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -682,7 +665,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -711,7 +693,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("CreateDate");
 
                     b.Property<Guid>("CreatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("CreatedBy");
 
@@ -737,7 +718,6 @@ namespace KerashineERP.Migrations
                         .HasColumnName("UpdateDate");
 
                     b.Property<Guid?>("UpdatedBy")
-                        .HasMaxLength(450)
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("UpdatedBy");
 
@@ -749,6 +729,150 @@ namespace KerashineERP.Migrations
                     b.HasKey("CompanyID", "LocationID");
 
                     b.ToTable("SET_Location");
+                });
+
+            modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeDetail", b =>
+                {
+                    b.Property<int>("CompanyID")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<int>("RecipeID")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    b.Property<int>("RecipeDetailID")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreateDate");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<string>("CreatedByValue")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("CreatedByValue");
+
+                    b.Property<int>("MaterialID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("QuantityRequired")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit")
+                        .HasColumnName("Status");
+
+                    b.Property<int>("UOMId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdateDate");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<string>("UpdatedByValue")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("UpdatedByValue");
+
+                    b.Property<decimal>("WastagePercent")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.HasKey("CompanyID", "RecipeID", "RecipeDetailID");
+
+                    b.HasIndex("CompanyID", "MaterialID");
+
+                    b.HasIndex("CompanyID", "UOMId");
+
+                    b.ToTable("PRO_RecipeDetail");
+                });
+
+            modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeHeader", b =>
+                {
+                    b.Property<int>("CompanyID")
+                        .HasColumnType("int")
+                        .HasColumnOrder(0);
+
+                    b.Property<int>("RecipeID")
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    b.Property<decimal>("BatchSize")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("BatchSizeUOM")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreateDate");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatedBy");
+
+                    b.Property<string>("CreatedByValue")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("CreatedByValue");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RecipeCode")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("RecipeName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit")
+                        .HasColumnName("Status");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdateDate");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UpdatedBy");
+
+                    b.Property<string>("UpdatedByValue")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)")
+                        .HasColumnName("UpdatedByValue");
+
+                    b.HasKey("CompanyID", "RecipeID");
+
+                    b.HasIndex("CompanyID", "ProductID");
+
+                    b.ToTable("PRO_RecipeHeader");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -951,7 +1075,7 @@ namespace KerashineERP.Migrations
 
             modelBuilder.Entity("KerashineERP.Models.Inventory.INV_Item", b =>
                 {
-                    b.HasOne("KerashineERP.Models.Inventory.INV_ItemCategory", "Category")
+                    b.HasOne("KerashineERP.Models.Inventory.INV_SET_Category", "Category")
                         .WithMany()
                         .HasForeignKey("CompanyID", "CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1031,6 +1155,44 @@ namespace KerashineERP.Migrations
                     b.Navigation("Business");
                 });
 
+            modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeDetail", b =>
+                {
+                    b.HasOne("KerashineERP.Models.Inventory.INV_Item", "Material")
+                        .WithMany()
+                        .HasForeignKey("CompanyID", "MaterialID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KerashineERP.Models.Production.PRO_RecipeHeader", "RecipeHeader")
+                        .WithMany("RecipeDetails")
+                        .HasForeignKey("CompanyID", "RecipeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KerashineERP.Models.Inventory.INV_SET_UOM", "UOM")
+                        .WithMany()
+                        .HasForeignKey("CompanyID", "UOMId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("RecipeHeader");
+
+                    b.Navigation("UOM");
+                });
+
+            modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeHeader", b =>
+                {
+                    b.HasOne("KerashineERP.Models.Inventory.INV_Item", "Product")
+                        .WithMany()
+                        .HasForeignKey("CompanyID", "ProductID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1090,6 +1252,11 @@ namespace KerashineERP.Migrations
             modelBuilder.Entity("KerashineERP.Models.Master.SET_Business", b =>
                 {
                     b.Navigation("Companies");
+                });
+
+            modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeHeader", b =>
+                {
+                    b.Navigation("RecipeDetails");
                 });
 #pragma warning restore 612, 618
         }

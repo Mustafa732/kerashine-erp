@@ -1,0 +1,83 @@
+@model IEnumerable<KerashineERP.Models.Production.PRO_RecipeHeader>
+@{
+    ViewData["Title"] = "Recipe Master";
+}
+
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Recipe Master</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary">
+            <i class="fa fa-plus"></i> New Recipe
+        </a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="recipeTable">
+                <thead>
+                    <tr>
+                        <th style="width:100px">Code</th>
+                        <th>Recipe Name</th>
+                        <th>FG Product</th>
+                        <th style="width:120px">Batch Size</th>
+                        <th style="width:100px">Status</th>
+                        <th style="width:120px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.RecipeCode</strong></td>
+                            <td>@item.RecipeName</td>
+                            <td>@item.Product?.ItemCode - @item.Product?.ItemName</td>
+                            <td>@item.BatchSize @item.BatchSizeUOM</td>
+                            <td>
+                                @if (item.IsActive)
+                                { <span class="ks-badge ks-badge-success">Active</span> }
+                                else
+                                { <span class="ks-badge ks-badge-danger">Inactive</span> }
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.RecipeID" class="ks-action-btn view" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.RecipeID" class="ks-action-btn edit" title="Edit">
+                                    <i class="fa fa-pen"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.RecipeID" class="ks-action-btn delete" title="Delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#recipeTable').DataTable({
+                "order": [[0, "desc"]],
+                "pageLength": 25
+            });
+        });
+    </script>
+}

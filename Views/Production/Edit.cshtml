@@ -1,0 +1,57 @@
+@model KerashineERP.Models.ViewModels.ProductionOrderViewModel
+@{
+    ViewData["Title"] = "Edit Production Order";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Edit - @Model.Header.ProductionOrderNo</h4></div>
+    <div class="ks-card-body">
+        @if(Model.Header.StatusCode == 1){
+            <div class="alert" style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:6px;padding:1rem;">This order is Approved - Cannot Edit</div>
+        }
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Header.ProductionOrderID" />
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>FG Product <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ProductID" class="form-control">
+                        @foreach (var fg in Model.FGItems){ <option value="@fg.ItemId" selected="@(fg.ItemId==Model.Header.ProductID)">@fg.ItemCode - @fg.ItemName</option> }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>Recipe <span class="text-danger">*</span></label>
+                    <select asp-for="Header.RecipeID" class="form-control" id="RecipeID">
+                        @foreach (var r in Model.Recipes){ <option value="@r.RecipeID" selected="@(r.RecipeID==Model.Header.RecipeID)">@r.RecipeCode - @r.RecipeName</option> }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Planned Qty</label>
+                    <input asp-for="Header.PlannedQty" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label>Planned Date</label>
+                    <input asp-for="Header.PlannedDate" class="form-control" type="date" />
+                </div>
+                <div class="col-md-2">
+                    <label>Batch Size</label>
+                    <input asp-for="Header.BatchSize" class="form-control" readonly style="background:#f8fafc;" />
+                </div>
+            </div>
+            <table class="table table-bordered table-sm" id="matTable">
+                <thead class="table-light"><tr><th>Material</th><th>Req Qty</th><th>Wastage %</th><th>UOM</th><th></th></tr></thead>
+                <tbody>
+                    @for(int i=0;i<Model.Details.Count;i++){
+                        <tr>
+                            <td><select name="Details[@i].MaterialID" class="form-control form-control-sm">@foreach(var m in Model.Materials){<option value="@m.ItemId" selected="@(m.ItemId==Model.Details[i].MaterialID)">@m.ItemCode - @m.ItemName</option>}</select></td>
+                            <td><input name="Details[@i].RequiredQty" value="@Model.Details[i].RequiredQty" class="form-control form-control-sm" /></td>
+                            <td><input name="Details[@i].WastagePercent" value="@Model.Details[i].WastagePercent" class="form-control form-control-sm" /></td>
+                            <td><select name="Details[@i].UOMId" class="form-control form-control-sm">@foreach(var u in Model.UOMs){<option value="@u.UOMId" selected="@(u.UOMId==Model.Details[i].UOMId)">@u.UOMCode - @u.UOMName</option>}</select></td>
+                            <td><button type="button" class="btn btn-sm btn-danger" onclick="$(this).closest('tr').remove()"><i class="bi bi-trash"></i></button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Update</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Back</a>
+        </form>
+    </div>
+</div>

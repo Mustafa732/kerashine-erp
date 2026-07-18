@@ -1,0 +1,61 @@
+@model List<KerashineERP.Models.Production.PRO_ProductionOrderHeader>
+@{
+    ViewData["Title"] = "Production Orders";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Production Orders</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary">
+            <i class="fa fa-plus"></i> New Order
+        </a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+        }
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="tbl">
+                <thead>
+                    <tr>
+                        <th>Order No</th>
+                        <th>FG Product</th>
+                        <th>Recipe</th>
+                        <th>Planned Qty</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th style="width:120px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <td><strong>@x.ProductionOrderNo</strong></td>
+                            <td>@x.Product?.ItemCode - @x.Product?.ItemName</td>
+                            <td>@x.Recipe?.RecipeName</td>
+                            <td>@x.PlannedQty.ToString("N2") @x.BatchSizeUOM</td>
+                            <td>@x.PlannedDate.ToString("dd-MMM-yyyy")</td>
+                            <td>
+                                @if (x.StatusCode == 1){ <span class="ks-badge ks-badge-success">Approved</span> }
+                                else if (x.StatusCode == 3){ <span class="ks-badge ks-badge-danger">Cancelled</span> }
+                                else { <span class="ks-badge" style="background:#f59e0b;color:white;">In Process</span> }
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@x.ProductionOrderID" class="ks-action-btn view" title="View"><i class="fa fa-eye"></i></a>
+                                @if (x.StatusCode == 5){
+                                    <a asp-action="Edit" asp-route-id="@x.ProductionOrderID" class="ks-action-btn edit" title="Edit"><i class="fa fa-pen"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script>
+$(function(){ $('#tbl').DataTable({ "order": [[0, "desc"]], "pageLength": 25 }); });
+</script>
+}

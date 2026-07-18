@@ -246,14 +246,14 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" ? "active" : "")" 
-                           asp-controller="Dashboard" asp-action="Index">
+                        asp-controller="Dashboard" asp-action="Index">
                             <i class="fa-solid fa-gauge-high"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" || ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" || ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "active" : "")" 
-                           href="#" data-bs-toggle="collapse" data-bs-target="#inventoryMenu">
+                        href="#" data-bs-toggle="collapse" data-bs-target="#inventoryMenu">
                             <i class="fa-solid fa-warehouse"></i>
                             <span>Inventory</span>
                         </a>
@@ -261,30 +261,55 @@
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" ? "active" : "")" 
-                                       asp-controller="ItemCategory" asp-action="Index">
+                                    asp-controller="ItemCategory" asp-action="Index">
                                         <i class="fa-solid fa-tags"></i>
                                         <span>Item Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" ? "active" : "")" 
-                                       asp-controller="UOM" asp-action="Index">
+                                    asp-controller="UOM" asp-action="Index">
                                         <i class="fa-solid fa-ruler"></i>
                                         <span>Units of Measure</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" ? "active" : "")" 
-                                       asp-controller="Item" asp-action="Index">
+                                    asp-controller="Item" asp-action="Index">
                                         <i class="fa-solid fa-box"></i>
                                         <span>Item Master</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "active" : "")" 
-                                       asp-controller="StockTransaction" asp-action="Index">
+                                    asp-controller="StockTransaction" asp-action="Index">
                                         <i class="fa-solid fa-right-left"></i>
                                         <span>Stock Transactions</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Recipe" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" ? "active" : "")" 
+                        href="#" data-bs-toggle="collapse" data-bs-target="#productionMenu">
+                            <i class="fa-solid fa-industry"></i>
+                            <span>Production</span>
+                        </a>
+                        <div class="collapse @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Recipe" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" ? "show" : "")" id="productionMenu">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Recipe" ? "active" : "")" 
+                                    asp-controller="Recipe" asp-action="Index">
+                                        <i class="fa-solid fa-flask"></i>
+                                        <span>Recipe Master</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" ? "active" : "")" 
+                                    asp-controller="Production" asp-action="Index">
+                                        <i class="fa-solid fa-gears"></i>
+                                        <span>Production Orders</span>
                                     </a>
                                 </li>
                             </ul>
