@@ -4,6 +4,7 @@ using KerashineERP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KerashineERP.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260718174318_PRO_MaterialIssuanceTables")]
+    partial class PRO_MaterialIssuanceTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1032,71 +1035,6 @@ namespace KerashineERP.Migrations
                     b.ToTable("PRO_ProductionOrderHeader");
                 });
 
-            modelBuilder.Entity("KerashineERP.Models.Production.PRO_ProductionReceiptHeader", b =>
-                {
-                    b.Property<int>("CompanyID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReceiptID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreateDate");
-
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatedBy");
-
-                    b.Property<string>("CreatedByValue")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("CreatedByValue");
-
-                    b.Property<int>("ProductionOrderID")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ReceiptDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ReceiptNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("ReceivedQty")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Remarks")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit")
-                        .HasColumnName("Status");
-
-                    b.Property<int>("StatusCode")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdateDate");
-
-                    b.Property<Guid?>("UpdatedBy")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UpdatedBy");
-
-                    b.Property<string>("UpdatedByValue")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)")
-                        .HasColumnName("UpdatedByValue");
-
-                    b.HasKey("CompanyID", "ReceiptID");
-
-                    b.HasIndex("CompanyID", "ProductionOrderID");
-
-                    b.ToTable("PRO_ProductionReceiptHeader");
-                });
-
             modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeDetail", b =>
                 {
                     b.Property<int>("CompanyID")
@@ -1597,17 +1535,6 @@ namespace KerashineERP.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Recipe");
-                });
-
-            modelBuilder.Entity("KerashineERP.Models.Production.PRO_ProductionReceiptHeader", b =>
-                {
-                    b.HasOne("KerashineERP.Models.Production.PRO_ProductionOrderHeader", "ProductionOrder")
-                        .WithMany()
-                        .HasForeignKey("CompanyID", "ProductionOrderID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ProductionOrder");
                 });
 
             modelBuilder.Entity("KerashineERP.Models.Production.PRO_RecipeDetail", b =>

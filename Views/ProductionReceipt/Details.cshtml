@@ -1,0 +1,30 @@
+@model KerashineERP.Models.Production.PRO_ProductionReceiptHeader
+@{
+    ViewData["Title"] = "Receipt Details";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Details - @Model.ReceiptNo</h4>
+        <div>
+            @if(Model.StatusCode==5){
+                <form asp-action="Approve" asp-route-id="@Model.ReceiptID" method="post" style="display:inline">
+                    <button type="submit" class="ks-btn ks-btn-primary" onclick="return confirm('Approve & Add FG Stock?')"><i class="fa fa-check"></i> Approve</button>
+                </form>
+            }
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Back</a>
+        </div>
+    </div>
+    <div class="ks-card-body">
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Receipt No:</strong> @Model.ReceiptNo</div>
+            <div class="col-md-3"><strong>Order No:</strong> @Model.ProductionOrder?.ProductionOrderNo</div>
+            <div class="col-md-3"><strong>Product:</strong> @Model.ProductionOrder?.Product?.ItemName</div>
+            <div class="col-md-3"><strong>Qty:</strong> @Model.ReceivedQty</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Date:</strong> @Model.ReceiptDate.ToString("dd-MMM-yyyy")</div>
+            <div class="col-md-3"><strong>Status:</strong> @(Model.StatusCode==1?"Approved":"In Process")</div>
+            <div class="col-md-6"><strong>Remarks:</strong> @Model.Remarks</div>
+        </div>
+    </div>
+</div>

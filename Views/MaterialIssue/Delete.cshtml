@@ -1,0 +1,15 @@
+@model KerashineERP.Models.Production.PRO_MaterialIssueHeader
+@{
+    ViewData["Title"] = "Delete Issue";
+}
+<div class="ks-card">
+    <div class="ks-card-header" style="background:var(--ks-danger);color:#fff;"><h4>Delete Issue - @Model.IssueNo</h4></div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;">Are you sure? This will soft delete.</div>
+        <p><strong>Order:</strong> @Model.ProductionOrder?.ProductionOrderNo | <strong>Date:</strong> @Model.IssueDate.ToString("dd-MMM-yyyy")</p>
+        <form asp-action="Delete" method="post"><input type="hidden" name="id" value="@Model.IssueID" />
+            <button type="submit" class="ks-btn" style="background:var(--ks-danger);color:#fff;">Delete</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Cancel</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+@model IEnumerable<KerashineERP.Models.Production.PRO_MaterialIssueHeader>
+@{
+    ViewData["Title"] = "Material Issue";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Material Issue</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary"><i class="fa fa-plus"></i> New Issue</a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"]!= null){ <div class="alert alert-success">@TempData["Success"]</div> }
+        @if (TempData["Error"]!= null){ <div class="alert alert-danger">@TempData["Error"]</div> }
+
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="issueTable">
+                <thead>
+                    <tr>
+                        <th>Issue No</th>
+                        <th>Production Order</th>
+                        <th>Product</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th style="width:120px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.IssueNo</strong></td>
+                            <td>@item.ProductionOrder?.ProductionOrderNo</td>
+                            <td>@item.ProductionOrder?.Product?.ItemName</td>
+                            <td>@item.IssueDate.ToString("dd-MMM-yyyy")</td>
+                            <td>
+                                @if(item.StatusCode == 1){ <span class="ks-badge ks-badge-success">Approved</span> }
+                                else{ <span class="ks-badge" style="background:#f59e0b;color:#fff;">In Process</span> }
+                            </td>
+                            <td>
+                                @if(item.StatusCode == 5){
+                                    <a asp-action="Details" asp-route-id="@item.IssueID" class="ks-action-btn" style="background:#f59e0b;color:#fff;" title="Approve"><i class="fa fa-check"></i></a>
+                                    <a asp-action="Edit" asp-route-id="@item.IssueID" class="ks-action-btn edit"><i class="fa fa-pen"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.IssueID" class="ks-action-btn delete"><i class="fa fa-trash"></i></a>
+                                } else {
+                                    <a asp-action="Details" asp-route-id="@item.IssueID" class="ks-action-btn view"><i class="fa fa-eye"></i></a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{ <script>$(function(){ $('#issueTable').DataTable({ "order": [[0,"desc"]], "pageLength": 25 }); });</script> }

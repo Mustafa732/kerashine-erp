@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KerashineERP.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : BaseController
     {
         private readonly AppDbContext _context;
 

@@ -251,65 +251,81 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
+                    
+                    <!-- INVENTORY -->
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" || ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" || ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "active" : "")" 
+                        <a class="nav-link dropdown-toggle @((new[] {"ItemCategory","UOM","Item","StockTransaction"}).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "active" : "")" 
                         href="#" data-bs-toggle="collapse" data-bs-target="#inventoryMenu">
                             <i class="fa-solid fa-warehouse"></i>
                             <span>Inventory</span>
                         </a>
-                        <div class="collapse @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" || ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" || ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "show" : "")" id="inventoryMenu">
+                        <div class="collapse @((new[] {"ItemCategory","UOM","Item","StockTransaction"}).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "show" : "")" id="inventoryMenu">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ItemCategory" ? "active" : "")" 
                                     asp-controller="ItemCategory" asp-action="Index">
-                                        <i class="fa-solid fa-tags"></i>
-                                        <span>Item Categories</span>
+                                        <i class="fa-solid fa-tags"></i><span>Item Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "UOM" ? "active" : "")" 
                                     asp-controller="UOM" asp-action="Index">
-                                        <i class="fa-solid fa-ruler"></i>
-                                        <span>Units of Measure</span>
+                                        <i class="fa-solid fa-ruler"></i><span>Units of Measure</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Item" ? "active" : "")" 
                                     asp-controller="Item" asp-action="Index">
-                                        <i class="fa-solid fa-box"></i>
-                                        <span>Item Master</span>
+                                        <i class="fa-solid fa-box"></i><span>Item Master</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockTransaction" ? "active" : "")" 
                                     asp-controller="StockTransaction" asp-action="Index">
-                                        <i class="fa-solid fa-right-left"></i>
-                                        <span>Stock Transactions</span>
+                                        <i class="fa-solid fa-right-left"></i><span>Stock Transactions</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     </li>
+
+                    <!-- PRODUCTION -->
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Recipe" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" ? "active" : "")" 
+                        <a class="nav-link dropdown-toggle @((new[] {"Recipe","Production","MaterialIssue","ProductionReceipt","StockLedger"}).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "active" : "")" 
                         href="#" data-bs-toggle="collapse" data-bs-target="#productionMenu">
                             <i class="fa-solid fa-industry"></i>
                             <span>Production</span>
                         </a>
-                        <div class="collapse @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Recipe" || ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" ? "show" : "")" id="productionMenu">
+                        <div class="collapse @((new[] {"Recipe","Production","MaterialIssue","ProductionReceipt","StockLedger"}).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "show" : "")" id="productionMenu">
                             <ul class="nav flex-column">
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Recipe" ? "active" : "")" 
                                     asp-controller="Recipe" asp-action="Index">
-                                        <i class="fa-solid fa-flask"></i>
-                                        <span>Recipe Master</span>
+                                        <i class="fa-solid fa-flask"></i><span>Recipe Master</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Production" ? "active" : "")" 
                                     asp-controller="Production" asp-action="Index">
-                                        <i class="fa-solid fa-gears"></i>
-                                        <span>Production Orders</span>
+                                        <i class="fa-solid fa-gears"></i><span>Production Orders</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "MaterialIssue" ? "active" : "")" 
+                                    asp-controller="MaterialIssue" asp-action="Index">
+                                        <i class="fa-solid fa-boxes-stacked"></i><span>Material Issue</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "ProductionReceipt" ? "active" : "")" 
+                                    asp-controller="ProductionReceipt" asp-action="Index">
+                                        <i class="fa-solid fa-box-open"></i><span>Production Receipt</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockLedger" ? "active" : "")" 
+                                    asp-controller="StockLedger" asp-action="Index">
+                                        <i class="fa-solid fa-book"></i><span>Stock Ledger Report</span>
                                     </a>
                                 </li>
                             </ul>

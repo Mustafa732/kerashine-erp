@@ -1,0 +1,48 @@
+@model KerashineERP.Models.ViewModels.MaterialIssueViewModel
+@{
+    ViewData["Title"] = "Create Issue";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Create Material Issue</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Create" method="post">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>Production Order <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ProductionOrderID" class="form-control" id="ProductionOrderID" required>
+                        <option value="">-- Select --</option>
+                        @foreach(var o in Model.ProductionOrders){
+                            <option value="@o.ProductionOrderID">@o.ProductionOrderNo - @o.Product?.ItemCode</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2"><label>Issue Date</label><input asp-for="Header.IssueDate" type="date" class="form-control" /></div>
+                <div class="col-md-6"><label>Remarks</label><input asp-for="Header.Remarks" class="form-control" /></div>
+            </div>
+            <table class="table table-bordered table-sm" id="matTable">
+                <thead class="table-light"><tr><th>Material</th><th>Req Qty</th><th>Issue Qty</th><th>UOM</th></tr></thead>
+                <tbody></tbody>
+            </table>
+            <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Save</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Cancel</a>
+        </form>
+    </div>
+</div>
+@section Scripts{
+<script>
+$("#ProductionOrderID").change(function(){
+    let id=$(this).val(); if(!id) return;
+    $.getJSON('/MaterialIssue/GetOrderDetails?orderId='+id, function(data){
+        $("#matTable tbody").html(''); let idx=0;
+        data.forEach(d=>{
+            $("#matTable tbody").append(`<tr>
+                <td><input type="hidden" name="Details[${idx}].MaterialID" value="${d.materialID}"/><input type="hidden" name="Details[${idx}].UOMId" value="${d.uomId}"/>${d.materialCode} - ${d.materialName}</td>
+                <td><input name="Details[${idx}].RequiredQty" value="${d.requiredQty}" class="form-control form-control-sm" readonly/></td>
+                <td><input name="Details[${idx}].IssuedQty" value="${d.requiredQty}" type="number" step="0.0001" class="form-control form-control-sm" required/></td>
+                <td>${d.uomCode}<input type="hidden" name="Details[${idx}].WastagePercent" value="${d.wastage}"/></td>
+            </tr>`); idx++;
+        });
+    });
+});
+</script>
+}

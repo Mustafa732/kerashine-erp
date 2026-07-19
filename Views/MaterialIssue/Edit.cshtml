@@ -1,0 +1,31 @@
+@model KerashineERP.Models.ViewModels.MaterialIssueViewModel
+@{
+    ViewData["Title"] = "Edit Issue";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Edit - @Model.Header.IssueNo</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Header.IssueID" />
+            <div class="row mb-3">
+                <div class="col-md-4"><label>Order</label><input class="form-control" value="@Model.Header.ProductionOrder?.ProductionOrderNo" readonly/></div>
+                <div class="col-md-2"><label>Date</label><input asp-for="Header.IssueDate" type="date" class="form-control"/></div>
+                <div class="col-md-6"><label>Remarks</label><input asp-for="Header.Remarks" class="form-control"/></div>
+            </div>
+            <table class="table table-bordered table-sm">
+                <thead class="table-light"><tr><th>Material</th><th>Req</th><th>Issued</th></tr></thead>
+                <tbody>
+                @for(int i=0;i<Model.Details.Count;i++){
+                    <tr>
+                        <td>@Model.Details[i].Material?.ItemName<input type="hidden" name="Details[@i].MaterialID" value="@Model.Details[i].MaterialID"/><input type="hidden" name="Details[@i].UOMId" value="@Model.Details[i].UOMId"/></td>
+                        <td><input name="Details[@i].RequiredQty" value="@Model.Details[i].RequiredQty" class="form-control form-control-sm" readonly/></td>
+                        <td><input name="Details[@i].IssuedQty" value="@Model.Details[i].IssuedQty" class="form-control form-control-sm"/></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            <button type="submit" class="ks-btn ks-btn-primary">Update</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Back</a>
+        </form>
+    </div>
+</div>

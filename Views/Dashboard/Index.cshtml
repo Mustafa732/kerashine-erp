@@ -3,61 +3,30 @@
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <style>
-    .small-box {
-        border-radius: 10px;
-        box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
-        position: relative;
-        display: block;
-        margin-bottom: 20px;
-        transition: all .3s ease;
-    }
-    .small-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 4px 25px rgba(0,0,0,.15);
-    }
-    .small-box > .inner {
-        padding: 20px;
-    }
-    .small-box h3 {
-        font-size: 2.2rem;
-        font-weight: 700;
-        margin: 0 0 10px 0;
-        white-space: nowrap;
-    }
-    .small-box p {
-        font-size: 1rem;
-        margin-bottom: 0;
-    }
-    .small-box .icon {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        font-size: 70px;
-        color: rgba(0,0,0,0.15);
-        transition: all .3s linear;
-    }
-    .small-box:hover .icon {
-        font-size: 75px;
-    }
-    .bg-gradient-info { background: linear-gradient(45deg, #17a2b8, #117a8b) !important; color: #fff; }
-    .bg-gradient-warning { background: linear-gradient(45deg, #ffc107, #d39e00) !important; color: #1f2d3d; }
-    .bg-gradient-success { background: linear-gradient(45deg, #28a745, #1e7e34) !important; color: #fff; }
-    .bg-gradient-danger { background: linear-gradient(45deg, #dc3545, #bd2130) !important; color: #fff; }
+    :root{ --ks-primary:#7c3aed; --ks-bg:#f8f7ff; }
+    body{ background: var(--ks-bg) !important; }
+    .odoo-kpi{ background:#fff; border-radius:16px; padding:22px; border:1px solid #ede9fe; box-shadow:0 4px 12px rgba(124,58,237,0.06); transition:0.3s; position:relative; overflow:hidden; }
+    .odoo-kpi:hover{ transform:translateY(-4px); box-shadow:0 12px 24px rgba(124,58,237,0.12); }
+    .odoo-kpi .icon-box{ width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; }
+    .odoo-kpi h2{ font-size:28px; font-weight:800; margin:8px 0 2px; color:#1e293b; letter-spacing:-0.5px; }
+    .odoo-kpi p{ font-size:13px; font-weight:500; color:#64748b; margin:0; text-transform:uppercase; letter-spacing:0.5px; }
+    .odoo-kpi .trend{ font-size:12px; font-weight:600; margin-top:10px; }
+    .ks-main-card{ background:#fff; border-radius:16px; border:1px solid #ede9fe; box-shadow:0 4px 12px rgba(0,0,0,0.04); overflow:hidden; }
+    .ks-main-card .card-header{ background:#fff; border-bottom:1px solid #f1f5f9; padding:18px 22px; display:flex; justify-content:space-between; align-items:center; }
+    .ks-main-card .card-header h5{ font-weight:700; font-size:15px; margin:0; color:#1e293b; }
+    .odoo-badge{ padding:4px 10px; border-radius:20px; font-size:11px; font-weight:700; }
 </style>
 
-<div class="content-header">
+<div class="content-header" style="padding:15px 0;">
     <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1 class="m-0 font-weight-bold">Dashboard</h1>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 style="font-size:24px;font-weight:800;color:#1e293b;margin:0;">Good Morning, Admin 👋</h1>
+                <p style="color:#64748b;margin:2px 0 0;font-size:13px;">Here's what's happening with your production today.</p>
             </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
-                </ol>
+            <div>
+                <a href="/Production/ProductionOrder/Create" class="btn" style="background:#7c3aed;color:#fff;border-radius:10px;padding:10px 18px;font-weight:600;"><i class="fa fa-plus mr-1"></i> New Production Order</a>
             </div>
         </div>
     </div>
@@ -65,119 +34,68 @@
 
 <section class="content">
     <div class="container-fluid">
-        <!-- KPI Cards -->
         <div class="row">
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-info">
-                    <div class="inner">
-                        <h3>@Model.TotalItems</h3>
-                        <p>Total Active Items</p>
-                    </div>
-                    <div class="icon"><i class="fas fa-cubes"></i></div>
-                    <a href="/ItemMaster" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-            
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-warning">
-                    <div class="inner">
-                        <h3>@Model.RawMaterialCount</h3>
-                        <p>Raw Materials</p>
-                    </div>
-                    <div class="icon"><i class="fas fa-flask"></i></div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-success">
-                    <div class="inner">
-                        <h3>@Model.FinishedGoodsCount</h3>
-                        <p>Finished Goods</p>
-                    </div>
-                    <div class="icon"><i class="fas fa-box-open"></i></div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-gradient-danger">
-                    <div class="inner">
-                        <h3>Rs @Model.TotalStockValue.ToString("N0")</h3>
-                        <p>Stock Valuation</p>
-                    </div>
-                    <div class="icon"><i class="fas fa-chart-line"></i></div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div>
+            <div class="col-lg-3 col-6"><div class="odoo-kpi"><div class="d-flex justify-content-between"><div class="icon-box" style="background:#ede9fe;color:#7c3aed;"><i class="fas fa-cubes"></i></div><span class="odoo-badge" style="background:#ede9fe;color:#7c3aed;">+12% this month</span></div><h2>@Model.TotalItems</h2><p>Total Active Items</p><div class="trend text-success"><i class="fa fa-arrow-up"></i> Inventory growing</div></div></div>
+            <div class="col-lg-3 col-6"><div class="odoo-kpi"><div class="d-flex justify-content-between"><div class="icon-box" style="background:#fef3c7;color:#d97706;"><i class="fas fa-flask"></i></div><span class="odoo-badge" style="background:#fef3c7;color:#d97706;">@Model.RawMaterialCount RM</span></div><h2>@Model.RawMaterialCount</h2><p>Raw Materials</p><div class="trend" style="color:#d97706;">Ready for production</div></div></div>
+            <div class="col-lg-3 col-6"><div class="odoo-kpi"><div class="d-flex justify-content-between"><div class="icon-box" style="background:#d1fae5;color:#059669;"><i class="fas fa-box-open"></i></div><span class="odoo-badge" style="background:#d1fae5;color:#059669;">@Model.FinishedGoodsCount FG</span></div><h2>@Model.FinishedGoodsCount</h2><p>Finished Goods</p><div class="trend text-success"><i class="fa fa-check"></i> In Stock</div></div></div>
+            <div class="col-lg-3 col-6"><div class="odoo-kpi"><div class="d-flex justify-content-between"><div class="icon-box" style="background:#fee2e2;color:#dc2626;"><i class="fas fa-chart-line"></i></div><span class="odoo-badge" style="background:#fee2e2;color:#dc2626;">Valuation</span></div><h2 style="font-size:22px;">Rs @Model.TotalStockValue.ToString("N0")</h2><p>Stock Valuation</p><div class="trend text-danger"><i class="fa fa-wallet"></i> Total investment</div></div></div>
         </div>
 
-        <!-- Low Stock Alert -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <h3 class="card-title">
-                            <i class="fas fa-exclamation-triangle text-danger mr-1"></i>
-                            Low Stock Alert
-                        </h3>
-                        <div class="card-tools">
-                            <span class="badge badge-danger">@Model.LowStockItems.Count() Items</span>
-                        </div>
+        <div class="row mt-3">
+            <div class="col-lg-8">
+                <div class="ks-main-card mb-4">
+                    <div class="card-header">
+                        <h5><i class="fas fa-exclamation-triangle text-danger mr-2"></i> Critical Stock Alert</h5>
+                        <a href="/ItemMaster" class="btn btn-sm" style="background:#f8f7ff;color:#7c3aed;font-weight:600;border-radius:8px;">View All</a>
                     </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover table-valign-middle">
-                            <thead>
-                                <tr>
-                                    <th>Code</th>
-                                    <th>Item Name</th>
-                                    <th>Type</th>
-                                    <th class="text-center">Current Stock</th>
-                                    <th class="text-center">Reorder Level</th>
-                                    <th class="text-center">Status</th>
-                                </tr>
+                    <div class="p-0">
+                        <table class="table table-hover mb-0" style="font-size:13px;">
+                            <thead style="background:#f8fafc;">
+                                <tr style="color:#64748b;font-size:11px;text-transform:uppercase;"><th style="border:0;padding:12px 20px;">Item</th><th style="border:0;">Type</th><th style="border:0;" class="text-center">Current</th><th style="border:0;" class="text-center">Reorder</th><th style="border:0;" class="text-center">Action</th></tr>
                             </thead>
                             <tbody>
-                                @if (Model.LowStockItems.Any())
-                                {
-                                    @foreach(var item in Model.LowStockItems)
-                                    {
-                                        <tr>
-                                            <td><span class="text-muted font-weight-bold">@item.ItemCode</span></td>
-                                            <td>@item.ItemName</td>
-                                            <td>
-                                                @if(item.ItemType == "RM") {
-                                                    <span class="badge bg-warning">Raw Material</span>
-                                                } else if(item.ItemType == "FG") {
-                                                    <span class="badge bg-success">Finished Good</span>
-                                                } else {
-                                                    <span class="badge bg-info">@item.ItemType</span>
-                                                }
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="text-danger font-weight-bold">@item.CurrentStock @item.StockUOM</span>
-                                            </td>
-                                            <td class="text-center">@item.ReorderLevel @item.StockUOM</td>
-                                            <td class="text-center">
-                                                <span class="badge badge-danger">Low</span>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
+                                @if(Model.LowStockItems.Any()){
+                                    foreach(var item in Model.LowStockItems){
                                     <tr>
-                                        <td colspan="6" class="text-center py-5">
-                                            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
-                                            <p class="text-muted mb-0">All stocks are above reorder level. Great job!</p>
-                                        </td>
+                                        <td style="padding:14px 20px;"><div style="font-weight:700;color:#1e293b;">@item.ItemName</div><small class="text-muted">@item.ItemCode</small></td>
+                                        <td>@if(item.ItemType=="RM"){<span class="odoo-badge" style="background:#fef3c7;color:#92400e;">RM</span>}else{<span class="odoo-badge" style="background:#d1fae5;color:#065f46;">FG</span>}</td>
+                                        <td class="text-center"><span style="font-weight:800;color:#dc2626;">@item.CurrentStock @item.StockUOM</span></td>
+                                        <td class="text-center text-muted">@item.ReorderLevel @item.StockUOM</td>
+                                        <td class="text-center"><span class="odoo-badge" style="background:#fee2e2;color:#991b1b;"><i class="fa fa-arrow-down"></i> Low</span></td>
                                     </tr>
+                                    }
+                                } else {
+                                    <tr><td colspan="5" class="text-center py-5"><div style="width:60px;height:60px;background:#d1fae5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#059669;"><i class="fa fa-check fa-2x"></i></div><h6 style="font-weight:700;">All Good!</h6><p class="text-muted small">All stocks are above reorder level</p></td></tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-4">
+                <div class="ks-main-card mb-4">
+                    <div class="card-header"><h5>Production Overview</h5></div>
+                    <div class="card-body">
+                        <canvas id="prodChart" height="220"></canvas>
+                        <div class="mt-4 d-grid gap-2">
+                            <a href="/Production/ProductionOrder" class="btn" style="background:#f8f7ff;border:1px solid #ede9fe;border-radius:10px;text-align:left;padding:12px;"><i class="fa fa-clipboard-list mr-2" style="color:#7c3aed;"></i><strong>Production Orders</strong><span class="float-right text-muted"><i class="fa fa-chevron-right"></i></span></a>
+                            <a href="/Production/MaterialIssue" class="btn" style="background:#fff7ed;border:1px solid #ffedd5;border-radius:10px;text-align:left;padding:12px;"><i class="fa fa-boxes-stacked mr-2" style="color:#ea580c;"></i><strong>Material Issues</strong><span class="float-right text-muted"><i class="fa fa-chevron-right"></i></span></a>
+                            <a href="/Production/ProductionReceipt" class="btn" style="background:#f0fdf4;border:1px solid #dcfce7;border-radius:10px;text-align:left;padding:12px;"><i class="fa fa-box-open mr-2" style="color:#16a34a;"></i><strong>FG Receipts</strong><span class="float-right text-muted"><i class="fa fa-chevron-right"></i></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+@section Scripts{
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById('prodChart'),{
+    type:'doughnut',
+    data:{labels:['Raw Material','Finished Goods','Packaging'],datasets:[{data:[@Model.RawMaterialCount, @Model.FinishedGoodsCount, @(Model.TotalItems - Model.RawMaterialCount - Model.FinishedGoodsCount)],backgroundColor:['#f59e0b','#10b981','#7c3aed'],borderWidth:0}]},
+    options:{cutout:'70%',plugins:{legend:{position:'bottom',labels:{usePointStyle:true,boxWidth:8,font:{size:11}}}} }
+});
+</script>
+}

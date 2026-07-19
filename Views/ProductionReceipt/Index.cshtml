@@ -1,0 +1,53 @@
+@model IEnumerable<KerashineERP.Models.Production.PRO_ProductionReceiptHeader>
+@{
+    ViewData["Title"] = "Production Receipt";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Production Receipt (FG Inward)</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary"><i class="fa fa-plus"></i> New Receipt</a>
+    </div>
+    <div class="ks-card-body">
+        @if(TempData["Success"]!=null){<div class="alert alert-success">@TempData["Success"]</div>}
+        @if(TempData["Error"]!=null){<div class="alert alert-danger">@TempData["Error"]</div>}
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="receiptTable">
+                <thead>
+                    <tr>
+                        <th>Receipt No</th>
+                        <th>Order No</th>
+                        <th>Product</th>
+                        <th>Received Qty</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th style="width:120px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var item in Model){
+                    <tr>
+                        <td><strong>@item.ReceiptNo</strong></td>
+                        <td>@item.ProductionOrder?.ProductionOrderNo</td>
+                        <td>@item.ProductionOrder?.Product?.ItemName</td>
+                        <td>@item.ReceivedQty</td>
+                        <td>@item.ReceiptDate.ToString("dd-MMM-yyyy")</td>
+                        <td>
+                            @if(item.StatusCode==1){<span class="ks-badge ks-badge-success">Approved</span>}
+                            else{<span class="ks-badge" style="background:#f59e0b;color:#fff;">In Process</span>}
+                        </td>
+                        <td>
+                            @if(item.StatusCode==5){
+                                <a asp-action="Details" asp-route-id="@item.ReceiptID" class="ks-action-btn" style="background:#f59e0b;color:#fff;" title="Approve"><i class="fa fa-check"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.ReceiptID" class="ks-action-btn delete"><i class="fa fa-trash"></i></a>
+                            } else {
+                                <a asp-action="Details" asp-route-id="@item.ReceiptID" class="ks-action-btn view"><i class="fa fa-eye"></i></a>
+                            }
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{<script>$(function(){ $('#receiptTable').DataTable({ "order": [[0,"desc"]] }); });</script>}

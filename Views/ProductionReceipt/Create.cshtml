@@ -1,0 +1,47 @@
+@model KerashineERP.Models.ViewModels.ProductionReceiptViewModel
+@{
+    ViewData["Title"] = "Create Receipt";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Create FG Receipt</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Create" method="post">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>Production Order <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ProductionOrderID" class="form-control" id="OrderID" required>
+                        <option value="">-- Select Order --</option>
+                        @foreach(var o in Model.ProductionOrders){
+                            <option value="@o.ProductionOrderID" data-product="@o.Product?.ItemName" data-planned="@o.PlannedQty">@o.ProductionOrderNo - @o.Product?.ItemName (Plan: @o.PlannedQty)</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>Receipt Date</label>
+                    <input asp-for="Header.ReceiptDate" type="date" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                    <label>Received Qty <span class="text-danger">*</span></label>
+                    <input asp-for="Header.ReceivedQty" type="number" step="0.0001" class="form-control" required />
+                </div>
+                <div class="col-md-4">
+                    <label>Remarks</label>
+                    <input asp-for="Header.Remarks" class="form-control" placeholder="Batch remarks" />
+                </div>
+            </div>
+            <div class="alert alert-info" id="infoBox" style="display:none;"></div>
+            <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Save</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Cancel</a>
+        </form>
+    </div>
+</div>
+@section Scripts{
+<script>
+$("#OrderID").change(function(){
+    let opt=$(this).find(':selected');
+    if(opt.val()){
+        $("#infoBox").show().html("<strong>Product:</strong> "+opt.data('product')+" | <strong>Planned Qty:</strong> "+opt.data('planned'));
+    } else { $("#infoBox").hide(); }
+});
+</script>
+}

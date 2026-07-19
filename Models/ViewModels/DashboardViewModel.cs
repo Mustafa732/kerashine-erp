@@ -13,11 +13,11 @@ namespace KerashineERP.Models.ViewModels
     // Naya ViewModel for Low Stock
     public class ItemStockViewModel
     {
-        public string ItemCode { get; set; }
-        public string ItemName { get; set; }
-        public string ItemType { get; set; }
+        public string? ItemCode { get; set; }
+        public string? ItemName { get; set; }
+        public string? ItemType { get; set; }
         public decimal CurrentStock { get; set; }
-        public string StockUOM { get; set; }
+        public string? StockUOM { get; set; }
         public decimal ReorderLevel { get; set; }
     }
 }

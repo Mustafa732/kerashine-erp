@@ -1,0 +1,15 @@
+@model KerashineERP.Models.Production.PRO_ProductionReceiptHeader
+@{
+    ViewData["Title"] = "Delete Receipt";
+}
+<div class="ks-card">
+    <div class="ks-card-header" style="background:var(--ks-danger,#ef4444);color:#fff;"><h4>Delete - @Model.ReceiptNo</h4></div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2;border:1px solid #fecaca;color:#991b1b;">Are you sure? This will soft delete.</div>
+        <p><strong>Order:</strong> @Model.ProductionOrder?.ProductionOrderNo | <strong>Qty:</strong> @Model.ReceivedQty | <strong>Date:</strong> @Model.ReceiptDate.ToString("dd-MMM-yyyy")</p>
+        <form asp-action="Delete" method="post"><input type="hidden" name="id" value="@Model.ReceiptID"/>
+            <button type="submit" class="ks-btn" style="background:#ef4444;color:#fff;">Delete</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Cancel</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+@model KerashineERP.Models.Production.PRO_MaterialIssueHeader
+@{
+    ViewData["Title"] = "Issue Details";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Details - @Model.IssueNo</h4>
+        <div>
+            @if(Model.StatusCode == 5){
+                <form asp-action="Approve" asp-route-id="@Model.IssueID" method="post" style="display:inline">
+                    <button type="submit" class="ks-btn ks-btn-primary" onclick="return confirm('Approve this Issue?')"><i class="fa fa-check"></i> Approve</button>
+                </form>
+                <a asp-action="Edit" asp-route-id="@Model.IssueID" class="ks-btn" style="background:#f59e0b;color:#fff;">Edit</a>
+            }
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Back</a>
+        </div>
+    </div>
+    <div class="ks-card-body">
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Order:</strong> @Model.ProductionOrder?.ProductionOrderNo</div>
+            <div class="col-md-3"><strong>Date:</strong> @Model.IssueDate.ToString("dd-MMM-yyyy")</div>
+            <div class="col-md-3"><strong>Status:</strong> @(Model.StatusCode==1?"Approved":"In Process")</div>
+            <div class="col-md-3"><strong>Remarks:</strong> @Model.Remarks</div>
+        </div>
+        <table class="ks-table ks-table-sm">
+            <thead><tr><th>Material</th><th>Req Qty</th><th>Issued Qty</th><th>UOM</th><th>Wastage</th></tr></thead>
+            <tbody>@if (Model?.IssueDetails != null) { @foreach(var d in Model.IssueDetails){<tr><td>@d.Material?.ItemCode - @d.Material?.ItemName</td><td>@d.RequiredQty</td><td>@d.IssuedQty</td><td>@d.UOM?.UOMCode</td><td>@d.WastagePercent</td></tr>}}</tbody>
+        </table>
+    </div>
+</div>

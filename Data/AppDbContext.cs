@@ -34,6 +34,11 @@ namespace KerashineERP.Data
         public DbSet<PRO_ProductionOrderHeader> PRO_ProductionOrderHeader { get; set; }
         public DbSet<PRO_ProductionOrderDetail> PRO_ProductionOrderDetail { get; set; }
 
+        public DbSet<PRO_MaterialIssueHeader> PRO_MaterialIssueHeader { get; set; }
+        public DbSet<PRO_MaterialIssueDetail> PRO_MaterialIssueDetail { get; set; }
+
+        public DbSet<PRO_ProductionReceiptHeader> PRO_ProductionReceiptHeader { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -84,6 +89,26 @@ namespace KerashineERP.Data
                .WithMany(x => x.OrderDetails)
                .HasForeignKey(x => new { x.CompanyID, x.ProductionOrderID })
                .OnDelete(DeleteBehavior.Cascade);
+               
+            modelBuilder.Entity<PRO_MaterialIssueHeader>().HasKey(x => new { x.CompanyID, x.IssueID });
+            modelBuilder.Entity<PRO_MaterialIssueDetail>().HasKey(x => new { x.CompanyID, x.IssueID, x.IssueDetailID });
+
+            modelBuilder.Entity<PRO_MaterialIssueHeader>()
+                .HasOne(x => x.ProductionOrder)
+                .WithMany()
+                .HasForeignKey(x => new { x.CompanyID, x.ProductionOrderID })
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PRO_MaterialIssueDetail>()
+                .HasOne(x => x.Header)
+                .WithMany(x => x.IssueDetails)
+                .HasForeignKey(x => new { x.CompanyID, x.IssueID })
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PRO_ProductionReceiptHeader>().HasKey(x => new { x.CompanyID, x.ReceiptID });
+            
+            modelBuilder.Entity<PRO_ProductionReceiptHeader>()
+                .HasOne(x => x.ProductionOrder).WithMany().HasForeignKey(x => new { x.CompanyID, x.ProductionOrderID }).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
