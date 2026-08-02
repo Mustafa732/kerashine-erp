@@ -252,6 +252,37 @@
                         </a>
                     </li>
                     
+                    <!-- MASTER SETUP -->
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle @((new[] {"DocumentType","BusinessPartner","BusinessPartnerType"}).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "active" : "")" 
+                        href="#" data-bs-toggle="collapse" data-bs-target="#masterSetupMenu">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <span>Master Setup</span>
+                        </a>
+                        <div class="collapse @((new[] {"DocumentType","BusinessPartner","BusinessPartnerType"}).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "show" : "")" id="masterSetupMenu">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "DocumentType" ? "active" : "")" 
+                                    asp-controller="DocumentType" asp-action="Index">
+                                        <i class="fa-solid fa-file-lines"></i><span>Document Types</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "BusinessPartnerType" ? "active" : "")" 
+                                    asp-controller="BusinessPartnerType" asp-action="Index">
+                                        <i class="fa-solid fa-users-gear"></i><span>Partner Types</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "BusinessPartner" ? "active" : "")" 
+                                    asp-controller="BusinessPartner" asp-action="Index">
+                                        <i class="fa-solid fa-handshake"></i><span>Business Partners</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                     <!-- INVENTORY -->
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle @((new[] {"ItemCategory","UOM","Item","StockTransaction"}).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "active" : "")" 
@@ -326,6 +357,31 @@
                                     <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "StockLedger" ? "active" : "")" 
                                     asp-controller="StockLedger" asp-action="Index">
                                         <i class="fa-solid fa-book"></i><span>Stock Ledger Report</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <!-- PURCHASE -->
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle @((new[] { "PurchaseOrder", "GRN" }).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "active" : "")"
+                        href="#" data-bs-toggle="collapse" data-bs-target="#purchaseMenu">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span>Purchase</span>
+                        </a>
+                        <div class="collapse @((new[] { "PurchaseOrder", "GRN" }).Contains(ViewContext.RouteData.Values["Controller"]?.ToString()) ? "show" : "")" id="purchaseMenu">
+                            <ul class="nav flex-column">
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "PurchaseOrder" ? "active" : "")"
+                                    asp-controller="PurchaseOrder" asp-action="Index">
+                                        <i class="fa-solid fa-file-invoice"></i><span>Purchase Order</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "GRN" ? "active" : "")"
+                                    asp-controller="GRN" asp-action="Index">
+                                        <i class="fa-solid fa-truck-ramp-box"></i><span>GRN</span>
                                     </a>
                                 </li>
                             </ul>

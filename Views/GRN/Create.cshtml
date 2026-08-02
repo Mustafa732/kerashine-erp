@@ -1,0 +1,74 @@
+﻿@model KerashineERP.Models.ViewModels.StockTransactionViewModel
+@{
+    ViewData["Title"] = "Create GRN";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Create GRN</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Create" method="post" id="grnForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>Select PO <span class="text-danger">*</span></label>
+                    <select id="poSelect" class="form-control" onchange="loadPO(this.value)" required>
+                        <option value="">-- Select Approved PO --</option>
+                        @foreach (var po in ViewBag.POList)
+                        {
+                            <option value="@po.POHeaderID" selected="@(ViewBag.SelectedPOId == po.POHeaderID)">@($"PO-{po.DocumentNumber} - {po.Vendor?.CustomerName} - {po.PODate:dd-MM-yyyy}")</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2"><label>GRN No</label><input asp-for="Header.DocumentNo" class="form-control" readonly placeholder="Auto" /></div>
+                <div class="col-md-2"><label>Date <span class="text-danger">*</span></label><input asp-for="Header.DocumentDate" type="date" class="form-control" required /></div>
+                <div class="col-md-4">
+                    <label>Receiving Location <span class="text-danger">*</span></label>
+                    <select asp-for="Header.ToLocationID" class="form-control" asp-items="@(new SelectList(Model.Locations, "LocationID", "LocationName"))" required><option value="">-- Select --</option></select>
+                </div>
+                <div class="row mb-3"><div class="col-md-12"><label>Remarks</label><input asp-for="Header.Remarks" class="form-control" placeholder="GRN Remarks" /></div></div>
+                <input type="hidden" asp-for="Header.DocumentTypeID" />
+
+                <table class="table table-bordered table-sm" id="detailsTable">
+                    <thead class="table-light"><tr><th width="25%">Item</th><th width="10%">PO Qty</th><th width="10%">Recv Qty</th><th width="12%">GRN Qty *</th><th width="10%">Rate</th><th width="10%">Amount</th><th width="18%">Remarks</th><th width="5%"></th></tr></thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Details.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="Details[@i].ItemID" value="@Model.Details[i].ItemID" />
+                                    <input type="hidden" name="Details[@i].SourceHeaderID" value="@Model.Details[i].SourceHeaderID" />
+                                    <input type="hidden" name="Details[@i].SourceDetailID" value="@Model.Details[i].SourceDetailID" />
+                                    <input type="hidden" name="Details[@i].SourceDocumentTypeID" value="@Model.Details[i].SourceDocumentTypeID" />
+                                    <input type="hidden" name="Details[@i].SourceCode" value="@Model.Details[i].SourceCode" />
+                                    @Model.Items.FirstOrDefault(x => x.ItemId == Model.Details[i].ItemID)?.ItemCode - @Model.Items.FirstOrDefault(x => x.ItemId == Model.Details[i].ItemID)?.ItemName
+                                </td>
+                                <td><span class="po-qty">@Model.Details[i].Quantity</span></td>
+                                <td><span class="badge bg-secondary">0</span></td>
+                                <td><input name="Details[@i].Quantity" type="number" step="0.001" class="form-control form-control-sm qty-input" value="@Model.Details[i].Quantity" required /></td>
+                                <td><input name="Details[@i].Rate" type="number" step="0.001" class="form-control form-control-sm rate-input" value="@Model.Details[i].Rate" required /></td>
+                                <td><input name="Details[@i].Amount" type="number" class="form-control form-control-sm amount-input" readonly value="@Model.Details[i].Amount" /></td>
+                                <td><input name="Details[@i].Remarks" class="form-control form-control-sm" value="@Model.Details[i].Remarks" /></td>
+                                <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot><tr><td colspan="5" class="text-end"><strong>Total:</strong></td><td><input id="totalAmount" class="form-control form-control-sm" readonly /></td><td colspan="2"></td></tr></tfoot>
+                </table>
+
+                <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Save GRN</button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Cancel</a>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        let rowIdx=@Model.Details.Count;
+        function loadPO(poId){ if(poId) window.location.href='/GRN/Create?poId='+poId; else window.location.href='/GRN/Create'; }
+        function removeRow(btn){ $(btn).closest('tr').remove(); calculateTotal(); }
+        $(document).on('input','.qty-input,.rate-input', function(){
+            let row=$(this).closest('tr'); let qty=parseFloat(row.find('.qty-input').val())||0; let rate=parseFloat(row.find('.rate-input').val())||0;
+            row.find('.amount-input').val((qty*rate).toFixed(2)); calculateTotal();
+        });
+        function calculateTotal(){ let total=0; $('.amount-input').each(function(){ total+=parseFloat($(this).val())||0; }); $('#totalAmount').val(total.toFixed(2)); }
+        calculateTotal();
+    </script>
+}

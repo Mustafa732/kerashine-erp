@@ -1,0 +1,110 @@
+﻿@model KerashineERP.Models.ViewModels.PurchaseOrderVM
+@{
+    ViewData["Title"] = "Edit PO";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Edit Purchase Order - PO-@Model.Header.DocumentNumber</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Edit" method="post" id="poForm">
+            <input type="hidden" asp-for="Header.CompanyID" />
+            <input type="hidden" asp-for="Header.POHeaderID" />
+            <input type="hidden" asp-for="Header.DocumentNumber" />
+            <input type="hidden" asp-for="Header.CreatedBy" />
+            <input type="hidden" asp-for="Header.CreatedByValue" />
+            <input type="hidden" asp-for="Header.CreatedDate" />
+            <input type="hidden" asp-for="SelectedDocTypeID" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>Doc Type <span class="text-danger">*</span></label>
+                    <select asp-for="Header.DocumentTypeID" class="form-control" asp-items="@(new SelectList(Model.DocumentTypes, "DocumentTypeID", "DocumentType", Model.SelectedDocTypeID))" required disabled>
+                        <option value="">-- Select --</option>
+                    </select>
+                    <input type="hidden" asp-for="Header.DocumentTypeID" />
+                </div>
+                <div class="col-md-2"><label>Doc No</label><input asp-for="Header.DocumentNumber" class="form-control" readonly /></div>
+                <div class="col-md-2"><label>Date <span class="text-danger">*</span></label><input asp-for="Header.PODate" type="date" class="form-control" required /></div>
+                <div class="col-md-5">
+                    <label>Vendor <span class="text-danger">*</span></label>
+                    <select asp-for="Header.VendorID" class="form-control" asp-items="@(new SelectList(Model.Vendors, "CustomerID", "CustomerName", Model.Header.VendorID))" required><option value="">-- Select Vendor --</option></select>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-9"><label>Remarks</label><input asp-for="Header.Remarks" class="form-control" /></div>
+                <div class="col-md-3"><label>Discount</label><input asp-for="Header.DiscountAmount" type="number" step="0.01" class="form-control" id="discountAmt" /></div>
+            </div>
+
+            <table class="table table-bordered table-sm" id="detailsTable">
+                <thead class="table-light"><tr><th width="35%">Item *</th><th width="10%">UOM</th><th width="12%">Qty *</th><th width="15%">Avg Rate</th><th width="15%">Amount</th><th width="13%">Remarks</th><th width="5%"><button type="button" class="btn btn-sm btn-success" onclick="addRow()"><i class="bi bi-plus"></i></button></th></tr></thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Details.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <select name="Details[@i].ItemID" class="form-control form-control-sm item-select" required>
+                                    <option value="">-- Select Item --</option>
+                                    @foreach (var item in Model.Items)
+                                    {
+                                        <option value="@item.ItemId" selected="@(item.ItemId == Model.Details[i].ItemID)">@item.ItemCode - @item.ItemName</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input name="Details[@i].UOMID" class="form-control form-control-sm uom-input" readonly value="@Model.Details[i].UOMID" /></td>
+                            <td><input name="Details[@i].Quantity" type="number" step="0.001" class="form-control form-control-sm qty-input" value="@Model.Details[i].Quantity" required /></td>
+                            <td><input name="Details[@i].Rate" type="number" step="0.001" class="form-control form-control-sm rate-input" value="@Model.Details[i].Rate" /></td>
+                            <td><input name="Details[@i].Amount" type="number" class="form-control form-control-sm amount-input" readonly value="@Model.Details[i].Amount" /></td>
+                            <td><input name="Details[@i].Remarks" class="form-control form-control-sm" value="@Model.Details[i].Remarks" /></td>
+                            <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot><tr><td colspan="4" class="text-end"><strong>Gross:</strong></td><td><input id="grossTotal" class="form-control form-control-sm" readonly /></td><td colspan="2"></td></tr><tr><td colspan="4" class="text-end"><strong>Net:</strong></td><td><input id="netTotal" class="form-control form-control-sm" readonly /></td><td colspan="2"></td></tr></tfoot>
+            </table>
+
+            <button type="submit" class="ks-btn ks-btn-primary"><i class="fa fa-save"></i> Update PO</button>
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Cancel</a>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        let rowIdx=@Model.Details.Count;
+        function addRow(){
+            let newRow=`<tr>
+                <td><select name="Details[${rowIdx}].ItemID" class="form-control form-control-sm item-select" required><option value="">-- Select Item --</option>@foreach(var item in Model.Items){
+                <option value="@item.ItemId">@item.ItemCode - @item.ItemName</option>
+            }
+</select></td>
+            <td><input name="Details[${rowIdx}].UOMID" class="form-control form-control-sm uom-input" readonly /></td>
+            <td><input name="Details[${rowIdx}].Quantity" type="number" step="0.001" class="form-control form-control-sm qty-input" value="0" required /></td>
+            <td><input name="Details[${rowIdx}].Rate" type="number" step="0.001" class="form-control form-control-sm rate-input" value="0" /></td>
+            <td><input name="Details[${rowIdx}].Amount" type="number" class="form-control form-control-sm amount-input" readonly /></td>
+            <td><input name="Details[${rowIdx}].Remarks" class="form-control form-control-sm" /></td>
+            <td><button type="button" class="btn btn-sm btn-danger" onclick="removeRow(this)"><i class="bi bi-trash"></i></button></td></tr>`;
+        $('#detailsTable tbody').append(newRow); rowIdx++;
+    }
+    function removeRow(btn){
+        if($('#detailsTable tbody tr').length>1){ $(btn).closest('tr').remove(); calculateTotals(); }
+        else { alert('At least one item is required'); }
+    }
+
+    $(document).on('change','.item-select', async function(){
+        let row=$(this).closest('tr'); let itemId=$(this).val(); if(!itemId) return;
+        let res=await fetch(`/PurchaseOrder/GetAvgRate?itemId=${itemId}`); let data=await res.json();
+        row.find('.rate-input').val(data.avgRate); row.find('.uom-input').val(data.uomId);
+        row.find('.qty-input').trigger('input');
+    });
+    $(document).on('input','.qty-input,.rate-input', function(){
+        let row=$(this).closest('tr'); let qty=parseFloat(row.find('.qty-input').val())||0; let rate=parseFloat(row.find('.rate-input').val())||0;
+        row.find('.amount-input').val((qty*rate).toFixed(2)); calculateTotals();
+    });
+    $(document).on('input','#discountAmt', calculateTotals);
+    function calculateTotals(){
+        let gross=0; $('.amount-input').each(function(){ gross+=parseFloat($(this).val())||0; });
+        let discount=parseFloat($('#discountAmt').val())||0;
+        $('#grossTotal').val(gross.toFixed(2)); $('#netTotal').val((gross-discount).toFixed(2));
+    }
+    calculateTotals();
+</script>
+}

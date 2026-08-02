@@ -151,6 +151,7 @@ D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.MvcApplicationPartsAssemblyInfo.cache
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.RazorAssemblyInfo.cache
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.RazorAssemblyInfo.cs
+D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.sourcelink.json
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\rjimswa.dswa.cache.json
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -233,4 +234,3 @@ D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\refint\Kerash
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.pdb
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.genruntimeconfig.cache
 D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\ref\KerashineERP.dll
-D:\Development\Mustafa_Repo\Projects\KerashineERP\obj\Debug\net9.0\KerashineERP.sourcelink.json

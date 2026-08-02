@@ -1,0 +1,34 @@
+@model KerashineERP.Models.Purchase.AR_SET_BusinessPartnerType
+@{
+    ViewData["Title"] = "Edit Business Partner Type";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Edit Business Partner Type</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="BusinessPartnerID" />
+            <div class="row">
+                <div class="col-md-6 ks-form-group">
+                    <label asp-for="BusinessPartnerName" class="ks-form-label"></label>
+                    <input asp-for="BusinessPartnerName" class="ks-form-control" />
+                    <span asp-validation-for="BusinessPartnerName" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 ks-form-group">
+                    <label asp-for="ShipTo" class="ks-form-label"></label>
+                    <input asp-for="ShipTo" class="ks-form-control" />
+                </div>
+                <div class="col-md-3 ks-form-group">
+                    <label class="ks-form-label">Status</label>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" asp-for="IsActive" />
+                        <label class="form-check-label" asp-for="IsActive">Active</label>
+                    </div>
+                </div>
+            <div class="d-flex gap-2">
+                <button type="submit" class="ks-btn ks-btn-primary"><i class="fa-solid fa-save"></i> Update</button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0; color:#1e293b;"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts { @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} }

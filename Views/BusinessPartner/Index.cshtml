@@ -1,0 +1,23 @@
+@model IEnumerable<KerashineERP.Models.Purchase.AR_SET_Customer>
+@{
+    ViewData["Title"] = "Business Partners";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Business Partners</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary"><i class="fa-solid fa-plus"></i> Add New</a>
+    </div>
+    <div class="ks-card-body">
+        <table class="ks-table ks-table-sm" id="bpTable">
+            <thead><tr><th>Code</th><th>Name</th><th>Phone</th><th>CNIC</th><th>Action</th></tr></thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr><td>@item.CustomerCode</td><td><strong>@item.CustomerName</strong></td><td>@item.PhoneNumber</td><td>@item.CNICNumber</td>
+                    <td><a asp-action="Edit" asp-route-id="@item.CustomerID" class="ks-action-btn edit"><i class="fa-solid fa-pen"></i></a></td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts{<script>$('#bpTable').DataTable();</script>}

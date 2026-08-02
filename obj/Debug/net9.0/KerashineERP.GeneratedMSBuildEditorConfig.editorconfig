@@ -32,8 +32,76 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartnerType/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyVHlwZVxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartnerType/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyVHlwZVxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartnerType/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyVHlwZVxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartnerType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyVHlwZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartner/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartner/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartner/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/BusinessPartner/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzaW5lc3NQYXJ0bmVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/Dashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/DocumentType/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRUeXBlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/DocumentType/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRUeXBlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/DocumentType/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRUeXBlXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/DocumentType/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRG9jdW1lbnRUeXBlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/GRN/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR1JOXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/GRN/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR1JOXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/GRN/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR1JOXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/GRN/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR1JOXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/GRN/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR1JOXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/Home/Index.cshtml]
@@ -130,6 +198,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/Production/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdGlvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/PurchaseOrder/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VPcmRlclxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/PurchaseOrder/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VPcmRlclxEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/PurchaseOrder/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VPcmRlclxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/PurchaseOrder/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VPcmRlclxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/PurchaseOrder/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHVyY2hhc2VPcmRlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Development/Mustafa_Repo/Projects/KerashineERP/Views/Recipe/Create.cshtml]

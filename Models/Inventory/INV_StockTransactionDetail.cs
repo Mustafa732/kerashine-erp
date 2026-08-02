@@ -46,6 +46,19 @@ namespace KerashineERP.Models.Inventory
         [StringLength(200)]
         public string? Remarks { get; set; }
 
+        // Add after Remarks property
+        [Display(Name = "Source Header")]
+        public int? SourceHeaderID { get; set; } // POHeaderID
+
+        [Display(Name = "Source Detail")]
+        public int? SourceDetailID { get; set; } // PODetailID
+
+        [Display(Name = "Source Doc Type")]
+        public int? SourceDocumentTypeID { get; set; }
+
+        [Display(Name = "Source Code")]
+        public int? SourceCode { get; set; } // PO-1001
+
         // Navigation Properties
         [ValidateNever]
         [ForeignKey("CompanyID, StockTransactionID")]

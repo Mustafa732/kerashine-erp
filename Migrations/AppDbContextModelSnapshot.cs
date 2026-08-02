@@ -1241,6 +1241,91 @@ namespace KerashineERP.Migrations
                     b.ToTable("PRO_RecipeHeader");
                 });
 
+            modelBuilder.Entity("KerashineERP.Models.Purchase.AR_SET_BusinessPartnerType", b =>
+                {
+                    b.Property<int>("BusinessPartnerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BusinessPartnerID"));
+
+                    b.Property<string>("BusinessPartnerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ShipTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BusinessPartnerID");
+
+                    b.ToTable("AR_SET_BusinessPartnerType");
+                });
+
+            modelBuilder.Entity("KerashineERP.Models.Purchase.AR_SET_BusinessPartnerTypes", b =>
+                {
+                    b.Property<int>("CompanyID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BusinessPartnerID")
+                        .HasColumnType("int");
+
+                    b.Property<short>("TypeCode")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("CompanyID", "BusinessPartnerID", "TypeCode");
+
+                    b.HasIndex("BusinessPartnerID");
+
+                    b.ToTable("AR_SET_BusinessPartnerTypes");
+                });
+
+            modelBuilder.Entity("KerashineERP.Models.Purchase.AR_SET_Customer", b =>
+                {
+                    b.Property<int>("CompanyID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CNICNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NTNNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusCode")
+                        .HasColumnType("int");
+
+                    b.HasKey("CompanyID", "CustomerID");
+
+                    b.ToTable("AR_SET_Customer");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1646,6 +1731,17 @@ namespace KerashineERP.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("KerashineERP.Models.Purchase.AR_SET_BusinessPartnerTypes", b =>
+                {
+                    b.HasOne("KerashineERP.Models.Purchase.AR_SET_BusinessPartnerType", "BusinessPartnerType")
+                        .WithMany()
+                        .HasForeignKey("BusinessPartnerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BusinessPartnerType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

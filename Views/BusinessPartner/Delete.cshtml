@@ -1,0 +1,32 @@
+@model KerashineERP.Models.Purchase.AR_SET_Customer
+@{
+    ViewData["Title"] = "Delete Business Partner";
+}
+<div class="ks-card">
+    <div class="ks-card-header" style="background:#ef4444; color:#fff;">
+        <h4><i class="fa-solid fa-triangle-exclamation"></i> Delete Business Partner</h4>
+    </div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2; border:1px solid #fecaca; color:#991b1b; border-radius:6px; padding:1rem; margin-bottom:1.5rem;">
+            <h5 style="margin:0 0 0.5rem 0; font-size:1rem; font-weight:600;">Are you sure you want to delete this partner?</h5>
+            <p style="margin:0; font-size:0.875rem;">Ye partner aur uski sari type mappings delete ho jayengi.</p>
+        </div>
+
+        <dl class="row">
+            <dt class="col-sm-3 ks-form-label">Code</dt><dd class="col-sm-9 mb-2"><code>@Model.CustomerCode</code></dd>
+            <dt class="col-sm-3 ks-form-label">Name</dt><dd class="col-sm-9 mb-2"><strong>@Model.CustomerName</strong></dd>
+            <dt class="col-sm-3 ks-form-label">Phone</dt><dd class="col-sm-9 mb-2">@Model.PhoneNumber</dd>
+            <dt class="col-sm-3 ks-form-label">CNIC</dt><dd class="col-sm-9 mb-2">@Model.CNICNumber</dd>
+            <dt class="col-sm-3 ks-form-label">Address</dt><dd class="col-sm-9 mb-2">@Model.Address</dd>
+        </dl>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="CompanyID" />
+            <input type="hidden" asp-for="CustomerID" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="ks-btn" style="background:#ef4444; color:#fff;"><i class="fa-solid fa-trash"></i> Delete</button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0; color:#1e293b;"><i class="fa-solid fa-arrow-left"></i> Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

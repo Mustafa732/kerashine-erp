@@ -1,0 +1,56 @@
+@model KerashineERP.ViewModels.BusinessPartnerVM
+@{
+    ViewData["Title"] = "Edit Business Partner";
+}
+<div class="ks-card">
+    <div class="ks-card-header"><h4>Edit Business Partner - @Model.Customer.CustomerCode</h4></div>
+    <div class="ks-card-body">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="Customer.CompanyID" />
+            <input type="hidden" asp-for="Customer.CustomerID" />
+            <input type="hidden" asp-for="Customer.Id" />
+
+            <ul class="nav nav-tabs" id="bpTab" role="tablist">
+                <li class="nav-item"><button class="nav-link active" type="button" data-bs-toggle="tab" data-bs-target="#general">General Info</button></li>
+                <li class="nav-item"><button class="nav-link" type="button" data-bs-toggle="tab" data-bs-target="#types">Business Partner Types</button></li>
+            </ul>
+            <div class="tab-content p-3 border border-top-0">
+                <div class="tab-pane fade show active" id="general">
+                    <div class="row">
+                        <div class="col-md-2 ks-form-group"><label class="ks-form-label">Code</label><input asp-for="Customer.CustomerCode" class="ks-form-control" readonly /></div>
+                        <div class="col-md-5 ks-form-group"><label class="ks-form-label">Customer Name *</label><input asp-for="Customer.CustomerName" class="ks-form-control" required /></div>
+                        <div class="col-md-3 ks-form-group"><label class="ks-form-label">Phone</label><input asp-for="Customer.PhoneNumber" class="ks-form-control" /></div>
+                        <div class="col-md-2 ks-form-group"><label class="ks-form-label">Status</label><div class="form-check mt-2"><input class="form-check-input" asp-for="Customer.IsActive" /><label class="form-check-label">Active</label></div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ks-form-group"><label class="ks-form-label">Address</label><textarea asp-for="Customer.Address" class="ks-form-control" rows="2"></textarea></div>
+                        <div class="col-md-2 ks-form-group"><label class="ks-form-label">CNIC</label><input asp-for="Customer.CNICNumber" class="ks-form-control" /></div>
+                        <div class="col-md-2 ks-form-group"><label class="ks-form-label">NTN</label><input asp-for="Customer.NTNNumber" class="ks-form-control" /></div>
+                        <div class="col-md-2 ks-form-group"><label class="ks-form-label">Email</label><input asp-for="Customer.EmailAddress" class="ks-form-control" /></div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="types">
+                    <h6>Select Types</h6>
+                    <div class="row mt-3">
+                        @foreach (var t in Model.AllTypes)
+                        {
+                            var isChecked = Model.SelectedTypeIds.Contains(t.BusinessPartnerID);
+                            <div class="col-md-3 mb-2">
+                                <div class="form-check p-3 border rounded @(isChecked? "bg-light border-primary" : "")">
+                                    <input class="form-check-input" type="checkbox" name="SelectedTypeIds" value="@t.BusinessPartnerID" id="type_@t.BusinessPartnerID" @(isChecked? "checked" : "") />
+                                    <label class="form-check-label fw-bold" for="type_@t.BusinessPartnerID">@t.BusinessPartnerName</label>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="ks-btn ks-btn-primary"><i class="fa-solid fa-save"></i> Update</button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0; color:#1e293b;"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            </div>
+        </form>
+    </div>
+</div>

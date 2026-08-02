@@ -1,0 +1,64 @@
+@model KerashineERP.Models.Master.SET_DocumentType
+@{
+    ViewData["Title"] = "Edit Document Type";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Edit Document Type</h4>
+    </div>
+    <div class="ks-card-body">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="CompanyID" />
+            <input type="hidden" asp-for="DocumentTypeID" />
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            
+            <div class="row">
+                <div class="col-md-4 ks-form-group">
+                    <label asp-for="DocumentType" class="ks-form-label"></label>
+                    <input asp-for="DocumentType" class="ks-form-control" />
+                    <span asp-validation-for="DocumentType" class="text-danger"></span>
+                </div>
+                <div class="col-md-2 ks-form-group">
+                    <label asp-for="Prefix" class="ks-form-label"></label>
+                    <input asp-for="Prefix" class="ks-form-control" />
+                    <span asp-validation-for="Prefix" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 ks-form-group">
+                    <label asp-for="TransactionType" class="ks-form-label"></label>
+                    <select asp-for="TransactionType" class="ks-form-control">
+                        <option value="1">IN (1)</option>
+                        <option value="-1">OUT (-1)</option>
+                        <option value="0">No Effect (0)</option>
+                    </select>
+                    <span asp-validation-for="TransactionType" class="text-danger"></span>
+                </div>
+                <div class="col-md-3 ks-form-group">
+                    <label class="ks-form-label">Status</label>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" asp-for="IsActive" />
+                        <label class="form-check-label" asp-for="IsActive">Active</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ks-form-group">
+                <label asp-for="Description" class="ks-form-label"></label>
+                <textarea asp-for="Description" class="ks-form-control" rows="2"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="ks-btn ks-btn-primary">
+                    <i class="fa-solid fa-save"></i> Update
+                </button>
+                <a asp-action="Index" class="ks-btn" style="background:#e2e8f0; color:#1e293b;">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

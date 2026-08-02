@@ -1,0 +1,84 @@
+﻿@model IEnumerable<KerashineERP.Models.Purchase.AP_PurchaseOrderHeader>
+@{
+    ViewData["Title"] = "Purchase Orders";
+    string currentStatus = ViewBag.CurrentStatus ?? "ALL";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Purchase Orders</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary"><i class="fa fa-plus"></i> New PO</a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show">@TempData["Error"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+        }
+
+        <div class="ks-filter-tabs mb-3">
+            <a asp-action="Index" asp-route-status="ALL" class="ks-filter-tab @(currentStatus == "ALL" ? "active" : "")">All</a>
+            <a asp-action="Index" asp-route-status="0" class="ks-filter-tab warning @(currentStatus == "0" ? "active" : "")">In Process</a>
+            <a asp-action="Index" asp-route-status="1" class="ks-filter-tab success @(currentStatus == "1" ? "active" : "")">Approved</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="poTable">
+                <thead><tr><th>Doc No</th><th>Date</th><th>Vendor</th><th>Gross</th><th>Net</th><th>Closed</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>PO-@item.DocumentNumber</strong></td>
+                            <td>@item.PODate.ToString("dd-MM-yyyy")</td>
+                            <td>@item.Vendor?.CustomerName</td>
+                            <td>@item.GrossAmount.ToString("N2")</td>
+                            <td>@item.NetAmount.ToString("N2")</td>
+                            <td>
+                                @if (item.ClosedCode == 0)
+                                {
+                                    <span class="ks-badge ks-badge-info">Open</span>
+                                }
+                                else if (item.ClosedCode == 1)
+                                {
+
+                                    <span class="ks-badge ks-badge-warning">Partial</span>
+                                }
+                                else
+                                {
+
+                                    <span class="ks-badge ks-badge-secondary">Closed</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.StatusCode == 0)
+                                {
+                                    <span class="ks-badge ks-badge-warning">In Process</span>
+                                }
+                                else
+                                {
+
+                                    <span class="ks-badge ks-badge-success">Approved</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.POHeaderID" class="ks-action-btn view"><i class="fa fa-eye"></i></a>
+                                @if (item.StatusCode == 0)
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.POHeaderID" class="ks-action-btn edit"><i class="fa fa-pen"></i></a>
+                                    <form asp-action="Delete" asp-route-id="@item.POHeaderID" method="post" style="display:inline" onsubmit="return confirm('Delete this PO?');"><button type="submit" class="ks-action-btn delete"><i class="fa-solid fa-trash"></i></button></form>
+                                    <form asp-action="Approve" asp-route-id="@item.POHeaderID" method="post" style="display:inline" onsubmit="return confirm('Approve this PO?');"><button type="submit" class="ks-action-btn success"><i class="fa fa-check"></i></button></form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>$(document).ready(function(){$('#poTable').DataTable({"order":[[1,"desc"]],"pageLength":25});});</script>
+}

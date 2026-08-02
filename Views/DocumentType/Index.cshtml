@@ -1,0 +1,56 @@
+@model IEnumerable<KerashineERP.Models.Master.SET_DocumentType>
+@{
+    ViewData["Title"] = "Document Types";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>Document Types</h4>
+        <a asp-action="Create" class="ks-btn ks-btn-primary">
+            <i class="fa-solid fa-plus"></i> Add New
+        </a>
+    </div>
+    <div class="ks-card-body">
+        @if (TempData["Success"]!= null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">@TempData["Success"]<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+        }
+        <div class="table-responsive">
+            <table class="ks-table ks-table-sm" id="docTable">
+                <thead>
+                    <tr>
+                        <th style="width:80px">ID</th>
+                        <th>Document Type</th>
+                        <th>Prefix</th>
+                        <th>Trans Type</th>
+                        <th>Description</th>
+                        <th style="width:100px">Status</th>
+                        <th style="width:90px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><strong>@item.DocumentTypeID</strong></td>
+                            <td><strong>@item.DocumentType</strong></td>
+                            <td><code>@item.Prefix</code></td>
+                            <td>@item.TransactionType</td>
+                            <td>@item.Description</td>
+                            <td>
+                                @if (item.IsActive) { <span class="ks-badge ks-badge-success">Active</span> }
+                                else { <span class="ks-badge ks-badge-danger">Inactive</span> }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.DocumentTypeID" class="ks-action-btn edit"><i class="fa-solid fa-pen"></i></a>
+                                <a asp-action="Delete" asp-route-id="@item.DocumentTypeID" class="ks-action-btn delete"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+<script>$(document).ready(function(){ $('#docTable').DataTable({ "pageLength": 25, "order": [[0,"asc"]], "columnDefs": [{ "orderable": false, "targets": 6 }] }); });</script>
+}

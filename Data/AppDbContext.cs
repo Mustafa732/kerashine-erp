@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using KerashineERP.Models.Inventory;
 using KerashineERP.Models.Master;
 using KerashineERP.Models.Production;
+using KerashineERP.Models.Purchase;
 
 namespace KerashineERP.Data
 {
@@ -38,6 +39,12 @@ namespace KerashineERP.Data
         public DbSet<PRO_MaterialIssueDetail> PRO_MaterialIssueDetail { get; set; }
 
         public DbSet<PRO_ProductionReceiptHeader> PRO_ProductionReceiptHeader { get; set; }
+        // Purchase
+        public DbSet<AR_SET_BusinessPartnerType> AR_SET_BusinessPartnerType { get; set; }
+        public DbSet<AR_SET_Customer> AR_SET_Customer { get; set; }
+        public DbSet<AR_SET_BusinessPartnerTypes> AR_SET_BusinessPartnerTypes { get; set; }
+        public DbSet<AP_PurchaseOrderHeader> AP_PurchaseOrderHeader { get; set; }
+        public DbSet<AP_PurchaseOrderDetail> AP_PurchaseOrderDetail { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -109,6 +116,18 @@ namespace KerashineERP.Data
             
             modelBuilder.Entity<PRO_ProductionReceiptHeader>()
                 .HasOne(x => x.ProductionOrder).WithMany().HasForeignKey(x => new { x.CompanyID, x.ProductionOrderID }).OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AR_SET_BusinessPartnerType>().HasKey(x => x.BusinessPartnerID);
+
+            modelBuilder.Entity<AR_SET_Customer>().HasKey(x => new { x.CompanyID, x.CustomerID });
+
+            modelBuilder.Entity<AR_SET_BusinessPartnerTypes>().HasKey(x => new { x.CompanyID, x.BusinessPartnerID, x.TypeCode });
+
+            modelBuilder.Entity<AP_PurchaseOrderHeader>()
+                .HasKey(x => new { x.CompanyID, x.POHeaderID });
+
+            modelBuilder.Entity<AP_PurchaseOrderDetail>()
+               .HasKey(x => new { x.CompanyID, x.POHeaderID, x.PODetailID });
         }
     }
 }

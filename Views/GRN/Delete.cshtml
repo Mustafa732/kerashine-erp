@@ -1,0 +1,18 @@
+﻿@model KerashineERP.Models.Inventory.INV_StockTransactionHeader
+<div class="ks-card">
+    <div class="ks-card-header" style="background:#fee2e2;"><h4 style="color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i> Deactivate GRN - @Model.FK_INV_StockTransactionHeader_SET_DocumentType.Prefix-@Model.DocumentNo</h4></div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2; border:1px solid #fecaca;">Are you sure? Stock will be reversed.</div>
+        <dl class="row" style="background:#f8fafc; padding:1rem; border-radius:6px; border:1px solid var(--ks-border);">
+            <dt class="col-sm-3">Date</dt>
+            <dd class="col-sm-9">@Model.DocumentDate.ToString("dd-MM-yyyy")</dd>
+            <dt class="col-sm-3">Location</dt>
+            <dd class="col-sm-9">@Model.FK_INV_StockTransactionHeader_SET_Location_To?.LocationName</dd>
+            <dt class="col-sm-3">Total</dt>
+            <dd class="col-sm-9">@Model.TotalAmount</dd>
+            <dt class="col-sm-3">PO Ref</dt>
+            <dd class="col-sm-9">@Model.Remarks</dd>
+        </dl>
+        <form asp-action="Delete" method="post"><input type="hidden" name="id" value="@Model.StockTransactionID" /><button type="submit" class="ks-btn" style="background:#dc2626; color:#fff;"><i class="fa-solid fa-ban"></i> Deactivate</button><a asp-action="Index" class="ks-btn" style="background:#e2e8f0;">Cancel</a></form>
+    </div>
+</div>

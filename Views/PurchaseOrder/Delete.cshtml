@@ -1,0 +1,9 @@
+﻿@model KerashineERP.Models.Purchase.AP_PurchaseOrderHeader
+<div class="ks-card">
+    <div class="ks-card-header" style="background:#fee2e2;"><h4 style="color:#991b1b;">Delete PO - PO-@Model.DocumentNumber</h4></div>
+    <div class="ks-card-body">
+        <div class="alert" style="background:#fef2f2; border:1px solid #fecaca;">Are you sure? This PO will be deactivated.</div>
+        <dl class="row"><dt class="col-sm-3">Vendor</dt><dd class="col-sm-9">@Model.Vendor?.CustomerName</dd><dt class="col-sm-3">Date</dt><dd class="col-sm-9">@Model.PODate.ToString("dd-MM-yyyy")</dd><dt class="col-sm-3">Net</dt><dd class="col-sm-9">@Model.NetAmount</dd></dl>
+        <form asp-action="Delete" method="post"><input type="hidden" asp-for="POHeaderID" /><button type="submit" class="ks-btn" style="background:#dc2626; color:#fff;"><i class="fa-solid fa-trash"></i> Delete</button><a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"> Cancel</a></form>
+    </div>
+</div>

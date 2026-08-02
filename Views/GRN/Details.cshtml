@@ -1,0 +1,40 @@
+﻿@model KerashineERP.Models.Inventory.INV_StockTransactionHeader
+@using KerashineERP.Models.Common
+@{
+    ViewData["Title"] = "GRN Details";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>GRN Details - @Model.FK_INV_StockTransactionHeader_SET_DocumentType.Prefix-@Model.DocumentNo</h4>
+        <div>
+            @if (Model.StatusCode == (short)TransactionStatus.InProcess)
+            {
+                <a asp-action="Edit" asp-route-id="@Model.StockTransactionID" class="ks-btn ks-btn-primary"><i class="fa fa-pen"></i> Edit</a>
+            }
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+    <div class="ks-card-body">
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Date:</strong> @Model.DocumentDate.ToString("dd-MM-yyyy")</div>
+            <div class="col-md-3"><strong>Location:</strong> @Model.FK_INV_StockTransactionHeader_SET_Location_To?.LocationName</div>
+            <div class="col-md-3"><strong>Status:</strong> @if(Model.StatusCode==(short)TransactionStatus.InProcess){
+            <span class="ks-badge ks-badge-warning">In Process</span>
+                        }else
+            {
+
+                <span class="ks-badge ks-badge-success">Approved</span>
+            }
+</div>
+            <div class="col-md-3"><strong>Total:</strong> @Model.TotalAmount?.ToString("N2")</div>
+        </div>
+        <div class="row mb-3"><div class="col-md-12"><strong>Remarks / PO Ref:</strong> @Model.Remarks</div></div>
+        <table class="ks-table ks-table-sm">
+            <thead><tr><th>Item</th><th>PO Ref</th><th>Qty</th><th>Rate</th><th>Amount</th><th>Remarks</th></tr></thead>
+            <tbody>@foreach(var d in Model.StockTransactionDetail){
+            <tr><td>@d.Item?.ItemCode - @d.Item?.ItemName</td><td>@d.SourceCode</td><td>@d.Quantity.ToString("N3")</td><td>@d.Rate.ToString("N3")</td><td>@d.Amount.ToString("N2")</td><td>@d.Remarks</td></tr>
+                        }
+</tbody>
+        </table>
+    </div>
+</div>

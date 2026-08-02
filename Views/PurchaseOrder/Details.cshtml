@@ -1,0 +1,31 @@
+﻿@model KerashineERP.Models.Purchase.AP_PurchaseOrderHeader
+@{
+    ViewData["Title"] = "PO Details";
+}
+<div class="ks-card">
+    <div class="ks-card-header">
+        <h4>PO Details - PO-@Model.DocumentNumber</h4>
+        <div>
+            @if (Model.StatusCode == 0)
+            {
+                <a asp-action="Edit" asp-route-id="@Model.POHeaderID" class="ks-btn ks-btn-primary"><i class="fa fa-pen"></i> Edit</a>
+            }
+            <a asp-action="Index" class="ks-btn" style="background:#e2e8f0;"><i class="fa fa-arrow-left"></i> Back</a>
+        </div>
+    </div>
+    <div class="ks-card-body">
+        <div class="row mb-3">
+            <div class="col-md-3"><strong>Vendor:</strong> @Model.Vendor?.CustomerName</div>
+            <div class="col-md-3"><strong>Date:</strong> @Model.PODate.ToString("dd-MM-yyyy")</div>
+            <div class="col-md-3"><strong>Status:</strong> @(Model.StatusCode == 0 ? "In Process" : "Approved")</div>
+            <div class="col-md-3"><strong>Net:</strong> @Model.NetAmount.ToString("N2")</div>
+        </div>
+        <table class="ks-table ks-table-sm">
+            <thead><tr><th>S.No</th><th>Item</th><th>Qty</th><th>Rate (Avg)</th><th>Amount</th><th>Remarks</th></tr></thead>
+            <tbody>@foreach(var d in Model.Details.OrderBy(x=>x.SerialNo)){
+            <tr><td>@d.SerialNo</td><td>@d.ItemID</td><td>@d.Quantity</td><td>@d.Rate</td><td>@d.Amount</td><td>@d.Remarks</td></tr>
+                        }
+</tbody>
+        </table>
+    </div>
+</div>
