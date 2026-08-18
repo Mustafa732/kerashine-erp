@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\",
+  "WorkspaceRootPath": "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{78870006-5DB0-FD89-91AE-DD19D886BFBF}|KerashineERP.csproj|d:\\development\\mustafa_repo\\projects\\kerashineerp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{78870006-5DB0-FD89-91AE-DD19D886BFBF}|KerashineERP.csproj|d:\\development\\mustafa_repo\\projects\\kerashine-erp\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{78870006-5DB0-FD89-91AE-DD19D886BFBF}|KerashineERP.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
@@ -20,11 +20,11 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\Views\\Shared\\_Layout.cshtml",
+              "DocumentMoniker": "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAADUBAAAAAAAAAAAAAIMBAABiAAAAAAAAAA==",
+              "ViewState": "AgIAAHEBAAAAAAAAAAAAAIMBAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-08-01T21:10:36.812Z",
               "EditorCaption": ""

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\KerashineERP.csproj": {}
+    "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\KerashineERP.csproj": {}
   },
   "projects": {
-    "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\KerashineERP.csproj": {
+    "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\KerashineERP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\KerashineERP.csproj",
+        "projectUniqueName": "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\KerashineERP.csproj",
         "projectName": "KerashineERP",
-        "projectPath": "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\KerashineERP.csproj",
+        "projectPath": "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\KerashineERP.csproj",
         "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
-        "outputPath": "D:\\Development\\Mustafa_Repo\\Projects\\KerashineERP\\obj\\",
+        "outputPath": "D:\\Development\\Mustafa_Repo\\Projects\\kerashine-erp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KerashineERP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+10f32734c461d99be79f0fc2149528de4f100e6e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf63bf45857a24f9cd5437c1a2401cc8e20489b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("KerashineERP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KerashineERP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
